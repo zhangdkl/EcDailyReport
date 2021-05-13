@@ -1,0 +1,1253 @@
+2021-05-03 17:56:11,812 - logger - INFO - 开始提取单井参数数据！
+2021-05-03 18:19:24,292 - logger - INFO - 开始提取单井参数数据！
+2021-05-03 18:19:24,421 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 419, in extract_well_parameter_data
+    extractwellparameterdata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 265, in extractwellparameterdata
+    realtimedata = realtimedata.encode('latin1').decode('gbk')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5465, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'encode'
+
+2021-05-03 18:33:07,582 - logger - INFO - 开始提取单井参数数据！
+2021-05-03 18:40:07,692 - logger - INFO - 开始提取单井参数数据！
+2021-05-03 18:40:57,031 - logger - INFO - 开始提取单井参数数据！
+2021-05-03 18:46:47,758 - logger - INFO - 开始提取单井参数数据！
+2021-05-04 10:23:50,487 - logger - INFO - 开始提取单井参数数据！
+2021-05-04 12:04:36,522 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'JLFS'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'JLFS'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 651, in extract_well_dynamic_static_data
+    extractwelldynamicstaticdata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 673, in extractwelldynamicstaticdata
+    staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'JLFS'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: SELECT RQ, JH, DWMC, CYQ, DYFS, CXFS, SCFS, ISCX, JB, SCZT, ZYLX, JLFS FROM ecsjb WHERE RQ >= '2021-04-24 00:00:00']
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-05-04 12:17:48,267 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.OperationalError: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 651, in extract_well_dynamic_static_data
+    extractwelldynamicstaticdata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 689, in extractwelldynamicstaticdata
+    staticdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='replace')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1406, in to_sql
+    table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 741, in create
+    self._execute_create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 733, in _execute_create
+    self.table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\schema.py", line 943, in create
+    bind._run_ddl_visitor(ddl.SchemaGenerator, self, checkfirst=checkfirst)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3009, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2017, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 902, in visit_table
+    self.traverse_single(index, create_ok=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 933, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 78, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1297, in _execute_ddl
+    compiled,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.OperationalError: (pymssql._pymssql.OperationalError) (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: CREATE INDEX [ix_EcWellHisData_JH] ON [EcWellHisData] ([JH])]
+(Background on this error at: http://sqlalche.me/e/14/e3q8)
+
+2021-05-04 12:38:22,925 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 651, in extract_well_dynamic_static_data
+    extractwelldynamicstaticdata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 673, in extractwelldynamicstaticdata
+    staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: SELECT RQ, JH, DWMC, CYQ, DYFS, CXFS, SCFS, ISCX, JB, SCZT, ZYLX, JLFS FROM EcWellHisData WHERE RQ >= '2021-04-24 00:00:00']
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-05-04 12:57:55,812 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'RQ'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 292, in executesql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'RQ'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 12:57:56,359 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'RQ'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 292, in executesql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'RQ'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 12:57:56,460 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3480, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3454, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2041, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 2018, in pymssql._mssql._quote_data
+  File "src\pymssql\_mssql.pyx", line 1988, in pymssql._mssql._quote_or_flatten
+  File "src\pymssql\_mssql.pyx", line 1951, in pymssql._mssql._quote_simple_value
+UnicodeEncodeError: 'gbk' codec can't encode character '\xb9' in position 2: illegal multibyte sequence
+
+2021-05-04 12:58:52,065 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 292, in executesql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 12:58:54,192 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.OperationalError: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3480, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3454, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1406, in to_sql
+    table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 747, in create
+    self._execute_create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 733, in _execute_create
+    self.table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\schema.py", line 943, in create
+    bind._run_ddl_visitor(ddl.SchemaGenerator, self, checkfirst=checkfirst)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3009, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2017, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 902, in visit_table
+    self.traverse_single(index, create_ok=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 933, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 78, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1297, in _execute_ddl
+    compiled,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.OperationalError: (pymssql._pymssql.OperationalError) (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: CREATE INDEX [ix_EcWellHisData_JH] ON [EcWellHisData] ([JH])]
+(Background on this error at: http://sqlalche.me/e/14/e3q8)
+
+2021-05-04 13:00:10,392 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 292, in executesql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:00:10,495 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.OperationalError: (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3480, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3454, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1406, in to_sql
+    table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 747, in create
+    self._execute_create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 733, in _execute_create
+    self.table.create()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\schema.py", line 943, in create
+    bind._run_ddl_visitor(ddl.SchemaGenerator, self, checkfirst=checkfirst)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3009, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2017, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 902, in visit_table
+    self.traverse_single(index, create_ok=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 483, in traverse_single
+    return meth(obj, **kw)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 933, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\ddl.py", line 78, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1297, in _execute_ddl
+    compiled,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 478, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.OperationalError: (pymssql._pymssql.OperationalError) (1919, b"Column 'JH' in table 'EcWellHisData' is of a type that is invalid for use as a key column in an index.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: CREATE INDEX [ix_EcWellHisData_JH] ON [EcWellHisData] ([JH])]
+(Background on this error at: http://sqlalche.me/e/14/e3q8)
+
+2021-05-04 13:00:57,254 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3480, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3422, in extracterchangwelldynicurvedata
+    staticdata = getdatasql(SqlserverDataServre, get_data_sql)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 154, in getdatasql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:01:29,492 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3480, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3422, in extracterchangwelldynicurvedata
+    staticdata = getdatasql(SqlserverDataServre, get_data_sql)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 154, in getdatasql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:02:34,202 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3482, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3424, in extracterchangwelldynicurvedata
+    staticdata = getdatasql(SqlserverDataServre, get_data_sql)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 154, in getdatasql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:03:29,000 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3481, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3423, in extracterchangwelldynicurvedata
+    staticdata = getdatasql(SqlserverDataServre, get_data_sql)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 154, in getdatasql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (208, b"Invalid object name 'EcWellHisData'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:04:36,757 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 458, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'JH'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3481, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3423, in extracterchangwelldynicurvedata
+    staticdata = getdatasql(SqlserverDataServre, get_data_sql)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 154, in getdatasql
+    cursor.execute(sql)
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'JH'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+2021-05-04 13:05:48,232 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3481, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3455, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2041, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 2018, in pymssql._mssql._quote_data
+  File "src\pymssql\_mssql.pyx", line 1988, in pymssql._mssql._quote_or_flatten
+  File "src\pymssql\_mssql.pyx", line 1951, in pymssql._mssql._quote_simple_value
+UnicodeEncodeError: 'gbk' codec can't encode character '\xb9' in position 2: illegal multibyte sequence
+
+2021-05-04 13:06:24,704 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3484, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/serverbacup.py", line 3458, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2041, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 2018, in pymssql._mssql._quote_data
+  File "src\pymssql\_mssql.pyx", line 1988, in pymssql._mssql._quote_or_flatten
+  File "src\pymssql\_mssql.pyx", line 1951, in pymssql._mssql._quote_simple_value
+UnicodeEncodeError: 'gbk' codec can't encode character '\xb9' in position 2: illegal multibyte sequence
+
+2021-05-04 13:10:44,282 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 271, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 453, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2041, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 2018, in pymssql._mssql._quote_data
+  File "src\pymssql\_mssql.pyx", line 1988, in pymssql._mssql._quote_or_flatten
+  File "src\pymssql\_mssql.pyx", line 1951, in pymssql._mssql._quote_simple_value
+UnicodeEncodeError: 'gbk' codec can't encode character '\xb9' in position 2: illegal multibyte sequence
+
+2021-05-04 13:16:05,877 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 271, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 454, in extracterchangwelldynicurvedata
+    executesql(SqlserverDataServre, del_data_sql)
+NameError: name 'SqlserverDataServre' is not defined
+
+2021-05-04 13:16:48,804 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 271, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 460, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-04 13:17:46,252 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 271, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 460, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-04 13:26:42,229 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 271, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 460, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-04 13:29:30,612 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 464, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-04 13:32:34,913 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 464, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-04 13:37:01,749 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 469, in extracterchangwelldynicurvedata
+    dynamicdata = changeencode(dynamicdata, )
+TypeError: changeencode() missing 1 required positional argument: 'cols'
+
+2021-05-04 13:37:45,535 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 468, in extracterchangwelldynicurvedata
+    dynamicdata = changeencode(dynamicdata, dynamicdata.columns)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 465, in changeencode
+    data[col] = data[col].str.decode('iso-8859-1').str.encode('utf-8')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5461, in __getattr__
+    return object.__getattribute__(self, name)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\accessor.py", line 180, in __get__
+    accessor_obj = self._accessor(obj)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 154, in __init__
+    self._inferred_dtype = self._validate(data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 217, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!
+
+2021-05-04 13:38:05,324 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 468, in extracterchangwelldynicurvedata
+    dynamicdata = changeencode(dynamicdata, dynamicdata.columns)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 465, in changeencode
+    data[col] = data[col].str.decode('iso-8859-1').encode('utf-8')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5461, in __getattr__
+    return object.__getattribute__(self, name)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\accessor.py", line 180, in __get__
+    accessor_obj = self._accessor(obj)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 154, in __init__
+    self._inferred_dtype = self._validate(data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 217, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!
+
+2021-05-04 13:38:44,834 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 468, in extracterchangwelldynicurvedata
+    dynamicdata = changeencode(dynamicdata, dynamicdata.columns)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 465, in changeencode
+    data[col] = data[col].str.decode('latin1').encode('utf-8')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5461, in __getattr__
+    return object.__getattribute__(self, name)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\accessor.py", line 180, in __get__
+    accessor_obj = self._accessor(obj)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 154, in __init__
+    self._inferred_dtype = self._validate(data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 217, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!
+
+2021-05-13 10:11:53,303 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 447, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:13:35,638 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 447, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:14:04,744 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 447, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:15:49,522 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'RCXL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 321, in extracterchangwelldynicurvedata
+    dynamicdata["XCB"] = dynamicdata["RCXL"] / dynamicdata["RCYL"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'RCXL'
+
+2021-05-13 10:16:07,072 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 451, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:39:25,550 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 451, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:41:13,426 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 275, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 451, in extracterchangwelldynicurvedata
+    dynamicdata.to_sql(tablename, GlOBAL_mssql_engine, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1934, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1252, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1274, in pymssql._mssql.MSSQLConnection.format_sql_command
+  File "src\pymssql\_mssql.pyx", line 2076, in pymssql._mssql._substitute_params
+  File "src\pymssql\_mssql.pyx", line 243, in pymssql._mssql.ensure_bytes
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 2: invalid start byte
+
+2021-05-13 10:45:23,383 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'RCXL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 276, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 322, in extracterchangwelldynicurvedata
+    dynamicdata["XCB"] = dynamicdata["RCXL"] / dynamicdata["RCYL"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'RCXL'
+
+2021-05-13 10:45:42,453 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 276, in extract_erchang_welldynicurve_data
+    extracterchangwelldynicurvedata(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 338, in extracterchangwelldynicurvedata
+    enleveldata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine)
+NameError: name 'GlOBAL_mssql_engine' is not defined
+
