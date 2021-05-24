@@ -3294,7 +3294,7 @@ def mechanical_extract_monthly_report():
 def extracterchangwelldynicurvedata(exday):
     begintime = getstartdate(exday)
 
-    print(begintime)
+    # print(begintime)
 
     # print(begintime)
 
