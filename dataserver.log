@@ -3552,3 +3552,674 @@ sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (515, b"Cannot 
 [parameters: ({'wellname': 'S66', 'dailychanxi': 1.5}, {'wellname': 'S71', 'dailychanxi': -221.7}, {'wellname': 'S75-2CH', 'dailychanxi': 6553.5}, {'wellname': 'S88CH', 'dailychanxi': 1.0}, {'wellname': 'TH10108', 'dailychanxi': 6553.5}, {'wellname': 'TH10109CH', 'dailychanxi': 0.0}, {'wellname': 'TH10110CH2', 'dailychanxi': 2.1}, {'wellname': 'TH10116CH', 'dailychanxi': 0.0}  ... displaying 10 of 116 total bound parameter sets ...  {'wellname': 'TK7-619CH', 'dailychanxi': 1.4}, {'wellname': 'TS3-3CH', 'dailychanxi': 1.3})]
 (Background on this error at: http://sqlalche.me/e/14/gkpj)
 
+2021-05-25 00:11:44,286 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 509, in ExtractEcWellChanxiDataHour
+    sumrealtimedata["exsumchanxi"] = exsumrealtimedata.loc[:["sumchanxi"]]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 895, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1102, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1137, in _get_slice_axis
+    slice_obj.start, slice_obj.stop, slice_obj.step, kind="loc"
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5277, in slice_indexer
+    start_slice, end_slice = self.slice_locs(start, end, step=step, kind=kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5482, in slice_locs
+    end_slice = self.get_slice_bound(end, "right", kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5390, in get_slice_bound
+    slc = self.get_loc(label)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 75, in pandas._libs.index.IndexEngine.get_loc
+TypeError: '['sumchanxi']' is an invalid key
+
+2021-05-25 00:12:00,177 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'sumchanxi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 509, in ExtractEcWellChanxiDataHour
+    sumrealtimedata["exsumchanxi"] = exsumrealtimedata.loc[:("sumchanxi")]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 895, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1102, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1137, in _get_slice_axis
+    slice_obj.start, slice_obj.stop, slice_obj.step, kind="loc"
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5277, in slice_indexer
+    start_slice, end_slice = self.slice_locs(start, end, step=step, kind=kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5482, in slice_locs
+    end_slice = self.get_slice_bound(end, "right", kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5396, in get_slice_bound
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5390, in get_slice_bound
+    slc = self.get_loc(label)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'sumchanxi'
+
+2021-05-25 00:19:12,119 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'sumchanxi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 509, in ExtractEcWellChanxiDataHour
+    sumrealtimedata["exsumchanxi"] = exsumrealtimedata.loc[:"sumchanxi"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 895, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1102, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1137, in _get_slice_axis
+    slice_obj.start, slice_obj.stop, slice_obj.step, kind="loc"
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5277, in slice_indexer
+    start_slice, end_slice = self.slice_locs(start, end, step=step, kind=kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5482, in slice_locs
+    end_slice = self.get_slice_bound(end, "right", kind)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5396, in get_slice_bound
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5390, in get_slice_bound
+    slc = self.get_loc(label)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'sumchanxi'
+
+2021-05-25 00:50:36,466 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'exsumchanxi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 511, in ExtractEcWellChanxiDataHour
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata["exsumchanxi"]], axis=1, join='inner')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'exsumchanxi'
+
+2021-05-25 00:51:04,935 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'exsumchanxi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 511, in ExtractEcWellChanxiDataHour
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata["exsumchanxi"]], axis=1, join='inner')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'exsumchanxi'
+
+2021-05-25 00:51:29,325 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'exsumchanxi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 513, in ExtractEcWellChanxiDataHour
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata["exsumchanxi"]], axis=1, join='inner')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'exsumchanxi'
+
+2021-05-25 00:57:51,094 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 512, in ExtractEcWellChanxiDataHour
+    sumrealtimedata = exsumrealtimedata.drop(columns=['time'])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 4315, in drop
+    errors=errors,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 4153, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 4188, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5591, in drop
+    raise KeyError(f"{labels[mask]} not found in axis")
+KeyError: "['time'] not found in axis"
+
+2021-05-25 01:09:33,912 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 545, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, hourchanxi, basedata, sumchanxi, exsumchanxi, diffhourchanxi, time) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(hourchanxi)s, %(basedata)s, %(sumchanxi)s, %(exsumchanxi)s, %(diffhourchanxi)s, %(time)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3430.021, 'exsumchanxi': 3430.021, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 45.84, 'exsumchanxi': 45.84, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 794.7818, 'exsumchanxi': 794.7818, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD19', 'compname': '管理三区', 'exportstation': 'AD20计', 'chanxistation': 'AD20罐区（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 19446.5723, 'exsumchanxi': 19446.5723, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}  ... displaying 10 of 870 total bound parameter sets ...  {'wellname': 'TS3-3CH', 'compname': '管理三区', 'exportstation': '12-9计', 'chanxistation': '12-9计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 814.7109, 'exsumchanxi': 814.7109, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'TS3CX', 'compname': '管理二区', 'exportstation': '10-8计', 'chanxistation': '10-8计', 'area': '塔河十区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 1.2185000000000004, 'basedata': 1.1, 'sumchanxi': 2519.2329, 'exsumchanxi': 2518.0081, 'diffhourchanxi': 1.2247999999999593, 'time': '2021-05-25 01:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-05-25 01:10:02,229 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 545, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, hourchanxi, basedata, sumchanxi, exsumchanxi, diffhourchanxi, time) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(hourchanxi)s, %(basedata)s, %(sumchanxi)s, %(exsumchanxi)s, %(diffhourchanxi)s, %(time)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3430.021, 'exsumchanxi': 3430.021, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 45.84, 'exsumchanxi': 45.84, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 794.7818, 'exsumchanxi': 794.7818, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD19', 'compname': '管理三区', 'exportstation': 'AD20计', 'chanxistation': 'AD20罐区（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 19446.5723, 'exsumchanxi': 19446.5723, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}  ... displaying 10 of 870 total bound parameter sets ...  {'wellname': 'TS3-3CH', 'compname': '管理三区', 'exportstation': '12-9计', 'chanxistation': '12-9计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 814.7109, 'exsumchanxi': 814.7109, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'TS3CX', 'compname': '管理二区', 'exportstation': '10-8计', 'chanxistation': '10-8计', 'area': '塔河十区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 1.2185000000000004, 'basedata': 1.1, 'sumchanxi': 2519.2329, 'exsumchanxi': 2518.0081, 'diffhourchanxi': 1.2247999999999593, 'time': '2021-05-25 01:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-05-25 01:10:15,940 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 545, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'exsumchanxi'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, hourchanxi, basedata, sumchanxi, exsumchanxi, diffhourchanxi, time) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(hourchanxi)s, %(basedata)s, %(sumchanxi)s, %(exsumchanxi)s, %(diffhourchanxi)s, %(time)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3430.021, 'exsumchanxi': 3430.021, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 45.84, 'exsumchanxi': 45.84, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'exsumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 794.7818, 'exsumchanxi': 794.7818, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'AD19', 'compname': '管理三区', 'exportstation': 'AD20计', 'chanxistation': 'AD20罐区（港西）', 'area': '塔河十二区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 19446.5723, 'exsumchanxi': 19446.5723, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}  ... displaying 10 of 870 total bound parameter sets ...  {'wellname': 'TS3-3CH', 'compname': '管理三区', 'exportstation': '12-9计', 'chanxistation': '12-9计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 814.7109, 'exsumchanxi': 814.7109, 'diffhourchanxi': 0.0, 'time': '2021-05-25 01:00:00'}, {'wellname': 'TS3CX', 'compname': '管理二区', 'exportstation': '10-8计', 'chanxistation': '10-8计', 'area': '塔河十区', 'prostatus': '开井', 'ischanxi': '掺稀', 'hourchanxi': 1.2185000000000004, 'basedata': 1.1, 'sumchanxi': 2519.2329, 'exsumchanxi': 2518.0081, 'diffhourchanxi': 1.2247999999999593, 'time': '2021-05-25 01:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-05-26 17:50:05,199 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+cx_Oracle.DatabaseError: ORA-01017: invalid username/password; logon denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 282, in extract_erchang_well_assay_data
+    ExtractErchangWellTestData(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 306, in ExtractErchangWellTestData
+    yemiandata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_bupro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3037, in execute
+    connection = self.connect(close_with_result=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3096, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 92, in __init__
+    else engine.raw_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3175, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3146, in _wrap_pool_connect
+    e, dialect, self
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2005, in _handle_dbapi_exception_noconnection
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-01017: invalid username/password; logon denied
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-05-26 17:52:00,271 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+cx_Oracle.DatabaseError: ORA-01017: invalid username/password; logon denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 282, in extract_erchang_well_assay_data
+    ExtractErchangWellTestData(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 306, in ExtractErchangWellTestData
+    yemiandata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_bupro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3037, in execute
+    connection = self.connect(close_with_result=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3096, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 92, in __init__
+    else engine.raw_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3175, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3146, in _wrap_pool_connect
+    e, dialect, self
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2005, in _handle_dbapi_exception_noconnection
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-01017: invalid username/password; logon denied
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-05-26 17:53:29,539 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+cx_Oracle.DatabaseError: ORA-01017: invalid username/password; logon denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 282, in extract_erchang_well_assay_data
+    ExtractErchangWellTestData(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 306, in ExtractErchangWellTestData
+    yemiandata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_bupro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3037, in execute
+    connection = self.connect(close_with_result=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3096, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 92, in __init__
+    else engine.raw_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3175, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3146, in _wrap_pool_connect
+    e, dialect, self
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2005, in _handle_dbapi_exception_noconnection
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3142, in _wrap_pool_connect
+    return fn()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 301, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 761, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 419, in checkout
+    rec = pool._do_get()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 145, in _do_get
+    self._dec_overflow()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 142, in _do_get
+    return self._create_connection()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 247, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 362, in __init__
+    self.__connect()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 605, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 72, in __exit__
+    with_traceback=exc_tb,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\pool\base.py", line 599, in __connect
+    connection = pool._invoke_creator(self)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\create.py", line 578, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 584, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-01017: invalid username/password; logon denied
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-05-27 01:14:41,376 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 558, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellAutoIndicatorDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 586, in ExtractEcWellAutoIndicatorDataDay
+    shicedata = shicedata.groupby("wellname").mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 1499, in mean
+    numeric_only=numeric_only,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1016, in _cython_agg_general
+    how, alt=alt, numeric_only=numeric_only, min_count=min_count
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1121, in _cython_agg_blocks
+    raise DataError("No numeric types to aggregate")
+pandas.core.base.DataError: No numeric types to aggregate
+

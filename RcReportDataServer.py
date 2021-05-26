@@ -17,9 +17,9 @@ import calendar
 
 # import matplotlib.pyplot as plt
 
-pd.set_option('display.max_columns', 30)
+pd.set_option('display.max_columns', 50)
 pd.set_option('display.max_rows', 50)
-pd.set_option('display.float_format', lambda x: '%.2f' % x)
+pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 
 # # 全局变量
@@ -75,8 +75,8 @@ def initdatacon():
                                  "servertype": 'oracle'}
     # 分公司生产数据池发布数据库
     dsn_tns1 = cx_Oracle.makedsn('10.16.3.34', 1521, service_name='kfdb')
-    daily_oracle_data_servre = {"user": 'YJYJY',
-                                "password": 'JYadmin#$2021',
+    daily_oracle_data_servre = {"user": 'yjywj',
+                                "password": 'WJadmin#$2021002',
                                 "dsn_tns": dsn_tns1,
                                 "servertype": 'oracle'}
 
@@ -274,12 +274,12 @@ def extract_erchang_well_assay_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂油井化验数据!")
 
-    extractdays = 3
+    extractdays = 6
     try:
         for exday in range(1, extractdays):
             # if True:
             #     exday = 4216
-            # ExtractErchangWellTestData(exday)
+            ExtractErchangWellTestData(exday)
             ExtractErchangWellManualIndicatorData(exday)
             print(getstartdate(exday), " 二厂油井化验数据转储完毕！")
     except Exception as e:
@@ -372,7 +372,7 @@ def ExtractErchangWellManualIndicatorData(exday):
     shoucedata["load"] = load
     shoucedata = shoucedata.drop(columns=['gongtu'])
 
-    print(shoucedata)
+    # print(shoucedata)
     # 删除已有数据
     tablename = "EcWellIndicator"
     del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "date", begintime)
@@ -387,12 +387,12 @@ def extract_erchang_well_hour_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井小时监测数据!")
 
-    extracthours = 6
+    extracthours = 3
     try:
         for exhour in range(1, extracthours):
             # if True:
             #     exday = 4216
-            # ExtractEcWellAutoIndicatorDataHour(exhour)
+            ExtractEcWellAutoIndicatorDataHour(exhour)
             ExtractEcWellChanxiDataHour(exhour)
             print("%s 二厂单井小时监测转储完毕！" % getbegintime((exhour - 1) * 60, "minutes"))
     except Exception as e:
@@ -471,6 +471,7 @@ def ExtractEcWellAutoIndicatorDataHour(exhour):
 
 # 转储二厂单井掺稀小时数据
 def ExtractEcWellChanxiDataHour(exhour):
+    exbegintime = getbegintime((exhour + 1) * 60, "minutes")
     begintime = getbegintime(exhour * 60, "minutes")
     endtime = getbegintime((exhour - 1) * 60, "minutes")
 
@@ -491,17 +492,31 @@ def ExtractEcWellChanxiDataHour(exhour):
     realtimedata.columns = FieldName
     realtimedata.sort_values("time")
 
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') AND cjsj <= TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss')" % \
+                   (str_fieds, tablename, exbegintime, begintime)
+    exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    exrealtimedata.columns = FieldName
+    exrealtimedata.sort_values("time")
+
     # 统计掺稀设定值、掺稀底数
     sumrealtimedata = realtimedata.drop_duplicates(subset=["wellname"], keep='last')
     sumrealtimedata.set_index(['wellname'], inplace=True)
-    sumrealtimedata = sumrealtimedata[["basedata", "sumchanxi"]]
+
+    exsumrealtimedata = exrealtimedata.drop_duplicates(subset=["wellname"], keep='last')
+    exsumrealtimedata.set_index(['wellname'], inplace=True)
+    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'basedata', 'hourchanxi'])
+    exsumrealtimedata.rename(columns={'sumchanxi': 'exsumchanxi'}, inplace=True)
+
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata], axis=1, join='inner')
+    sumrealtimedata["diffhourchanxi"] = sumrealtimedata["sumchanxi"] - sumrealtimedata["exsumchanxi"]
+    sumrealtimedata = sumrealtimedata.drop(columns=['time', 'hourchanxi', 'exsumchanxi'])
 
     # 统计小时掺稀量，平均值
     realtimedata = realtimedata.groupby("wellname").mean()
     realtimedata = realtimedata.drop(columns=['basedata', 'sumchanxi'])
+    realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
+
     realtimedata["time"] = endtime
-    realtimedata["basedata"] = sumrealtimedata["basedata"]
-    realtimedata["sumchanxi"] = sumrealtimedata["sumchanxi"]
 
     # 归属关系统计
     tablename = "EcWellStaticData"
@@ -519,10 +534,7 @@ def ExtractEcWellChanxiDataHour(exhour):
     staticdata.columns = FieldName
     staticdata = staticdata.set_index("wellname")
 
-    # realtimedata = realtimedata
     realtimedata = pd.concat([staticdata, realtimedata], axis=1, join='inner')
-
-    # print(realtimedata)
 
     # 删除已有数据
     tablename = "EcWellChanxiRealtimeAutoHour"
@@ -538,12 +550,12 @@ def extract_erchang_well_daily_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井日度监测数据!")
 
-    extracdays = 3
+    extracdays = 6
     try:
         for exday in range(1, extracdays):
             # if True:
             #     exday = 4216
-            # ExtractEcWellAutoIndicatorDataDay(exday)
+            ExtractEcWellAutoIndicatorDataDay(exday)
             ExtractEcWellChanxiDataDay(exday)
             print("%s 二厂单井日度监测转储完毕！" % getbegintime(exday, "days"))
     except Exception as e:
@@ -556,6 +568,7 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
     begintime = getbegintime(exday, "days")
     endtime = getbegintime(exday - 1, "days")
     uptime = getstartdate(exday - 1)
+    # print(begintime, endtime)
     #
     # 自动功图数据
     StrFieds = ""
@@ -570,18 +583,19 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' and %s <= '%s'" % (StrFieds, tablename, "date", begintime, "date", endtime)
     shicedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_UTF8)
     # shicedata.columns = ShishiFieldName
-    shicedata = shicedata.groupby("wellname").mean()
-    shicedata = shicedata.round(1)
-    shicedata["date"] = uptime
-    # print(shicedata)
+    if len(shicedata) > 0:
+        shicedata = shicedata.groupby("wellname").mean()
+        shicedata = shicedata.round(1)
+        shicedata["date"] = uptime
+        # print(shicedata)
 
-    # 删除已有数据
-    tablename = "EcWellIndicatorAutoDaily"
-    del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "date", uptime)
-    executesql(SqlserverDataServre, del_data_sql)
+        # 删除已有数据
+        tablename = "EcWellIndicatorAutoDaily"
+        del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "date", uptime)
+        executesql(SqlserverDataServre, del_data_sql)
 
-    # 写入测试数据
-    shicedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+        # 写入测试数据
+        shicedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
 
 
 # 转储二厂单井掺稀日度数据
@@ -589,12 +603,12 @@ def ExtractEcWellChanxiDataDay(exday):
     begintime = getbegintime(exday, "days")
     endtime = getbegintime(exday - 1, "days")
     uptime = getstartdate(exday - 1)
-    print(begintime, endtime)
+    # print(begintime, endtime)
 
     # 小时掺稀数据
     StrFieds = ""
     tablename = "EcWellChanxiRealtimeCheckHour"
-    GetField = ["wellname", "time", "basedata", "hourchanxi", "sumchanxi", "compname", "exportstation", "chanxistation", "area", "prostatus",
+    GetField = ["wellname", "time", "basedata", "diffhourchanxi", "sumchanxi", "compname", "exportstation", "chanxistation", "area", "prostatus",
                 "ischanxi", "remark"]
     FieldName = ["wellname", "date", "basedata", "dailychanxi", "sumchanxi", "compname", "exportstation", "chanxistation", "area", "prostatus",
                  "ischanxi", "remark"]
@@ -616,7 +630,7 @@ def ExtractEcWellChanxiDataDay(exday):
     sumdailydata["dailychanxi"] = dailydata.groupby("wellname")["dailychanxi"].sum()
     sumdailydata["remark"] = dailydata.groupby("wellname")["remark"].apply(lambda x: x.str.cat(sep=';'))
     sumdailydata["date"] = uptime
-    print(sumdailydata)
+    # print(sumdailydata)
     # print(len(sumdailydata))
 
     # 删除已有数据
@@ -685,7 +699,7 @@ def extract_erchang_well_dynicurve_data():
     print("......................................................")
     print(getnowtime(), "开始提取二厂单井曲线数据!")
 
-    extractdays = 3
+    extractdays = 10
     try:
         for exday in range(1, extractdays):
             # if True:
@@ -722,7 +736,8 @@ def ExtractErchangWellDynicurveData(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "RQ", begintime)
     # dynamicdata = getdatasql(SqlserverDataServre, get_data_sql)
     dynamicdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
-    dynamicdata = pd.DataFrame(dynamicdata, columns=FieldName)
+    # dynamicdata = pd.DataFrame(dynamicdata, columns=FieldName)
+    dynamicdata.columns = FieldName
     dynamicdata = dynamicdata.set_index(["JH"])
     dynamicdata["XCB"] = dynamicdata["RCXL"] / dynamicdata["RCYL"]
     dynamicdata["BX"] = dynamicdata["HHYL"] / dynamicdata["PL"] * 100
@@ -741,7 +756,8 @@ def ExtractErchangWellDynicurveData(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "date", begintime)
     # enleveldata = getdatasql(SqlserverDataServre, get_data_sql)
     enleveldata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
-    enleveldata = pd.DataFrame(enleveldata, columns=FieldName)
+    # enleveldata = pd.DataFrame(enleveldata, columns=FieldName)
+    enleveldata.columns = FieldName
     enleveldata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
     enleveldata = enleveldata.set_index(["JH"])
     # print(enleveldata)
@@ -760,7 +776,8 @@ def ExtractErchangWellDynicurveData(exday):
     # meteringdata = getdatasql(SqlserverDataServre, get_data_sql)
     meteringdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
 
-    meteringdata = pd.DataFrame(meteringdata, columns=FieldName)
+    # meteringdata = pd.DataFrame(meteringdata, columns=FieldName)
+    meteringdata.columns = FieldName
     meteringdata.sort_values(by="JL", inplace=True)
     meteringdata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
     meteringdata = meteringdata.set_index(["JH"])
@@ -779,7 +796,8 @@ def ExtractErchangWellDynicurveData(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "testdate", begintime)
     # viscositydata = getdatasql(SqlserverDataServre, get_data_sql)
     viscositydata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
-    viscositydata = pd.DataFrame(viscositydata, columns=FieldName)
+    # viscositydata = pd.DataFrame(viscositydata, columns=FieldName)
+    viscositydata.columns = FieldName
     # print(viscositydata)
     viscositydata.sort_values(by="NV", inplace=True)
     viscositydata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
@@ -800,7 +818,8 @@ def ExtractErchangWellDynicurveData(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "testdate", begintime)
     # moisturedata = getdatasql(SqlserverDataServre, get_data_sql)
     moisturedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
-    moisturedata = pd.DataFrame(moisturedata, columns=FieldName)
+    # moisturedata = pd.DataFrame(moisturedata, columns=FieldName)
+    moisturedata.columns = FieldName
     moisturedata.sort_values(by="HYHS", inplace=True)
     moisturedata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
     moisturedata = moisturedata.set_index(["JH"])
@@ -818,8 +837,10 @@ def ExtractErchangWellDynicurveData(exday):
             StrFieds = StrFieds + ", " + field
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "testdate", begintime)
     # densitydata = getdatasql(SqlserverDataServre, get_data_sql)
-    densitydata = pd.DataFrame(moisturedata, columns=FieldName)
-    densitydata = pd.DataFrame(densitydata, columns=FieldName)
+    densitydata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    # densitydata = pd.DataFrame(moisturedata, columns=FieldName)
+    # densitydata = pd.DataFrame(densitydata, columns=FieldName)
+    densitydata.columns = FieldName
     densitydata.sort_values(by="MD", inplace=True)
     densitydata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
     densitydata = densitydata.set_index(["JH"])
@@ -839,6 +860,9 @@ def ExtractErchangWellDynicurveData(exday):
 
     dynamicdata.dropna(subset=["RQ"], inplace=True)
     dynamicdata.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+    # print(dynamicdata)
+    #
     # print(dynamicdata.loc[:, ["RQ", "MD"]])
 
     # 删除已有数据
@@ -856,21 +880,30 @@ if __name__ == '__main__':
     print("开始初始化数据")
     initconfig()
 
-    # extract_erchang_well_dynicurve_data
+    # extract_erchang_well_dynicurve_data()
     # extract_erchang_well_relegation_data()
     # extract_erchang_well_assay_data()
-    extract_erchang_well_daily_monitor_data()
     # extract_erchang_well_hour_monitor_data()
+    # extract_erchang_well_daily_monitor_data()
 
     # extract_tanker_shipment_data()
     # extract_well_realtime_data()
     # extract_level_date()
 
-    # # print("开始迭代更新数据")
-    # scheduler = BackgroundScheduler()
-    # # 提取单井参数数据
-    # job8 = scheduler.add_job(extract_erchang_well_hour_monitor_data, 'cron', minute=2)
-    # scheduler.start()
-    #
-    # while True:
-    #     time.sleep(0.1)
+    print("开始迭代更新数据")
+    scheduler = BackgroundScheduler()
+    # 提取单井参数数据
+    # 集合数据，生成动态集合数据，可供单井曲线使用
+    job1 = scheduler.add_job(extract_erchang_well_dynicurve_data, 'cron', minute=6)
+    # 提取油井静态归属关系
+    job2 = scheduler.add_job(extract_erchang_well_relegation_data, 'cron', minute=5)
+    # 提取化验数据，包括动静压力、动静液面、手测功图数据
+    job3 = scheduler.add_job(extract_erchang_well_assay_data, 'interval', hours=2)
+    # 每小时归集远传数据，生成小时动态数据
+    job4 = scheduler.add_job(extract_erchang_well_hour_monitor_data, 'cron', minute=4)
+    # 每天归集小时动态数据，生成日度动态数据，包括功图数据及站库掺稀数据
+    job5 = scheduler.add_job(extract_erchang_well_daily_monitor_data, 'cron', hour=16, minute=5)
+    scheduler.start()
+
+    while True:
+        time.sleep(0.1)
