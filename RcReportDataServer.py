@@ -18,8 +18,11 @@ import calendar
 # import matplotlib.pyplot as plt
 
 pd.set_option('display.max_columns', 50)
-pd.set_option('display.max_rows', 50)
+pd.set_option('display.max_rows', 100)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
+# pd.set_option('display.max_colwidth', 5000)
+pd.set_option('display.width', 1000)
+
 
 
 # # 全局变量
@@ -387,13 +390,15 @@ def extract_erchang_well_hour_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井小时监测数据!")
 
-    extracthours = 3
+    extracthours = 6
     try:
         for exhour in range(1, extracthours):
             # if True:
             #     exday = 4216
             ExtractEcWellAutoIndicatorDataHour(exhour)
             ExtractEcWellChanxiDataHour(exhour)
+            ExtractEcStationExTransmissionDataHour(exhour)
+            ExtractEcStationChanxiInputDataHour(exhour)
             print("%s 二厂单井小时监测转储完毕！" % getbegintime((exhour - 1) * 60, "minutes"))
     except Exception as e:
         GLOBAL_Logger.info(traceback.format_exc())
@@ -538,6 +543,183 @@ def ExtractEcWellChanxiDataHour(exhour):
 
     # 删除已有数据
     tablename = "EcWellChanxiRealtimeAutoHour"
+    del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "time", endtime)
+    executesql(SqlserverDataServre, del_data_sql)
+
+    # # 写入测试数据
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+
+
+# 转储二厂站库外输小时数据
+def ExtractEcStationExTransmissionDataHour(exhour):
+    # 流量计状态检查
+    def checkstatus(x):
+        if pd.isnull(x):
+            status = "无数据"
+        elif x < 10:
+            status = "正常"
+        else:
+            status = "底数异常"
+
+        return status
+
+    exbegintime = getbegintime((exhour + 1) * 60, "minutes")
+    begintime = getbegintime(exhour * 60, "minutes")
+    endtime = getbegintime((exhour - 1) * 60, "minutes")
+
+    tablename = "SSC_LLJ_SS"
+
+    # 当前小时数据
+    fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
+    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and cjsj<TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and " \
+                   "instr(sbbm, '%s')>0" % (str_fieds, tablename, begintime, endtime, "_YYWSHG")
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    realtimedata.columns = FieldName
+    realtimedata.sort_values("time")
+    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+
+    # 当前小时累计数据
+    sumrealtimedata = realtimedata.drop_duplicates(subset=["divcode"], keep='last')
+    sumrealtimedata.set_index(['divcode'], inplace=True)
+
+    # 上一小时数据
+    fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
+    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and cjsj<TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and " \
+                   "instr(sbbm, '%s')>0" % (str_fieds, tablename, exbegintime, begintime, "_YYWSHG")
+    exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    exrealtimedata.columns = FieldName
+    exrealtimedata.sort_values("time")
+    # exrealtimedata["station"] = exrealtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+    # 上小时累计数据
+    exsumrealtimedata = exrealtimedata.drop_duplicates(subset=["divcode"], keep='last')
+    exsumrealtimedata.set_index(['divcode'], inplace=True)
+    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'hourchanxi', 'pressure', 'temperature'])
+    exsumrealtimedata.rename(columns={'sumchanxi': 'exsumchanxi'}, inplace=True)
+
+    # 计算外输底数差值
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata], axis=1, join='inner')
+    sumrealtimedata["diffhourchanxi"] = sumrealtimedata["sumchanxi"] - sumrealtimedata["exsumchanxi"]
+    sumrealtimedata = sumrealtimedata.drop(columns=['time', 'hourchanxi', 'temperature', 'pressure', 'exsumchanxi'])
+
+    # 计算小时数据
+    realtimedata = realtimedata.groupby("divcode").mean()
+    realtimedata = realtimedata.drop(columns=['sumchanxi'])
+    realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
+    realtimedata.set_index(['station'], inplace=True)
+    realtimedata["time"] = endtime
+    realtimedata["devicetype"] = "原油外输"
+    realtimedata["stacheck"] = abs((realtimedata["hourchanxi"] - realtimedata["diffhourchanxi"])/realtimedata["hourchanxi"]*100)
+    realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
+    realtimedata["devicestatus"] = realtimedata["stacheck"].map(checkstatus)
+
+    # 删除已有数据
+    tablename = "EcStationExtransmissionAutoHour"
+    del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "time", endtime)
+    executesql(SqlserverDataServre, del_data_sql)
+
+    # # 写入测试数据
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+
+
+# 转储二厂站库掺稀来油小时数据
+def ExtractEcStationChanxiInputDataHour(exhour):
+    # 流量计状态检查
+    def checkstatus(x):
+        if pd.isnull(x):
+            status = "无数据"
+        elif x < 10:
+            status = "正常"
+        else:
+            status = "底数异常"
+
+        return status
+
+    exbegintime = getbegintime((exhour + 1) * 60, "minutes")
+    begintime = getbegintime(exhour * 60, "minutes")
+    endtime = getbegintime((exhour - 1) * 60, "minutes")
+
+    tablename = "SSC_LLJ_SS"
+
+    # 当前小时数据
+    fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
+    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and cjsj<TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and " \
+                   "instr(sbbm, '%s')>0" % (str_fieds, tablename, begintime, endtime, "_LXYGX")
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    realtimedata.columns = FieldName
+    realtimedata.sort_values("time")
+    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+
+    # 当前小时累计数据
+    sumrealtimedata = realtimedata.drop_duplicates(subset=["divcode"], keep='last')
+    sumrealtimedata.set_index(['divcode'], inplace=True)
+    # print(sumrealtimedata)
+
+    # 上一小时数据
+    fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
+    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and cjsj<TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') and " \
+                   "instr(sbbm, '%s')>0" % (str_fieds, tablename, exbegintime, begintime, "_LXYGX")
+    exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    exrealtimedata.columns = FieldName
+    exrealtimedata.sort_values("time")
+    # exrealtimedata["station"] = exrealtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+    # 上小时累计数据
+    exsumrealtimedata = exrealtimedata.drop_duplicates(subset=["divcode"], keep='last')
+    exsumrealtimedata.set_index(['divcode'], inplace=True)
+    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'hourchanxi', 'pressure', 'temperature'])
+    exsumrealtimedata.rename(columns={'sumchanxi': 'exsumchanxi'}, inplace=True)
+
+    # 计算外输底数差值
+    sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata], axis=1, join='inner')
+    sumrealtimedata["diffhourchanxi"] = sumrealtimedata["sumchanxi"] - sumrealtimedata["exsumchanxi"]
+    sumrealtimedata = sumrealtimedata.drop(columns=['time', 'hourchanxi', 'temperature', 'pressure', 'exsumchanxi'])
+
+    # 计算小时数据
+    realtimedata = realtimedata.groupby("divcode").mean()
+    realtimedata = realtimedata.drop(columns=['sumchanxi'])
+    realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
+    realtimedata.set_index(['station'], inplace=True)
+    realtimedata["time"] = endtime
+    realtimedata["devicetype"] = "掺稀来油"
+    realtimedata["stacheck"] = abs((realtimedata["hourchanxi"] - realtimedata["diffhourchanxi"])/realtimedata["hourchanxi"]*100)
+    realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
+    realtimedata["devicestatus"] = realtimedata["stacheck"].map(checkstatus)
+
+    # print(realtimedata)
+
+    # 删除已有数据
+    tablename = "EcStationChanxiInputAutoHour"
     del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "time", endtime)
     executesql(SqlserverDataServre, del_data_sql)
 

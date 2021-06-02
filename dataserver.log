@@ -4223,3 +4223,526 @@ sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-01017: invalid usern
     raise DataError("No numeric types to aggregate")
 pandas.core.base.DataError: No numeric types to aggregate
 
+2021-06-01 00:47:04,800 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+cx_Oracle.DatabaseError: ORA-00920: 无效的关系运算符
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 397, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 569, in ExtractEcStationExTransmissionDataHour
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-00920: 无效的关系运算符
+[SQL: SELECT CJSJ, SBBM, SSLL, LJLL, YL, WD FROM SSC_LLJ_SS WHERE cjsj>TO_DATE('2021-05-31 23:00:00', 'yyyy-mm-dd,hh24:mi:ss') and cjsj<=TO_DATE('2021-06-01 00:00:00', 'yyyy-mm-dd,hh24:mi:ss') and instr(sbbm, '_YYWS'))>0]
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-06-01 01:19:26,418 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 397, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 597, in ExtractEcStationExTransmissionDataHour
+    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'hourchanxi', 'pressure', 'temperature', 'station'])
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 4315, in drop
+    errors=errors,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 4153, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 4188, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 5591, in drop
+    raise KeyError(f"{labels[mask]} not found in axis")
+KeyError: "['station'] not found in axis"
+
+2021-06-01 01:29:06,554 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 397, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 609, in ExtractEcStationExTransmissionDataHour
+    exsumrealtimedata.set_index(['divcode'], inplace=True)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 4727, in set_index
+    raise KeyError(f"None of {missing} are in the columns")
+KeyError: "None of ['divcode'] are in the columns"
+
+2021-06-01 01:54:14,660 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'devicestatus'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 400, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 624, in ExtractEcStationExTransmissionDataHour
+    realtimedata["devicestatus"] = realtimedata["devicestatus"].map(checkstatus)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'devicestatus'
+
+2021-06-01 02:38:14,910 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (515, b"Cannot insert the value NULL into column 'devicecode', table 'cyec.dbo.EcStationExtransmissionAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (515, b"Cannot insert the value NULL into column 'devicecode', table 'cyec.dbo.EcStationExtransmissionAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 400, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 638, in ExtractEcStationExTransmissionDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (515, b"Cannot insert the value NULL into column 'devicecode', table 'cyec.dbo.EcStationExtransmissionAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationExtransmissionAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 42.788000000000004, 'pressure': 1.3338333333333339, 'temperature': 64.17333333333333, 'sumchanxi': 489599.12, 'diffhourchanxi': 42.54999999998836, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 0.5562307189203639, 'devicestatus': '正常'}, {'station': '10-4计', 'hourchanxi': 110.55999999999992, 'pressure': 2.426666666666667, 'temperature': 67.57833333333333, 'sumchanxi': 1032773.5, 'diffhourchanxi': 111.11999999999534, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 0.5065123010088882, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 45.31749999999997, 'pressure': 2.188666666666668, 'temperature': 63.19333333333332, 'sumchanxi': 413204.1, 'diffhourchanxi': 40.52999999996973, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 10.56435151989902, 'devicestatus': '底数异常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-10计', 'hourchanxi': None, 'pressure': 0.9200000000000013, 'temperature': 70.96000000000002, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-12计', 'hourchanxi': 217.16999999999982, 'pressure': 0.8651666666666668, 'temperature': 42.76333333333332, 'sumchanxi': 2484772.8, 'diffhourchanxi': 217.9199999999255, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 0.3453515678618952, 'devicestatus': '正常'}, {'station': '12-13计', 'hourchanxi': 61.748666666666644, 'pressure': 1.2296666666666665, 'temperature': 75.19, 'sumchanxi': 632151.4, 'diffhourchanxi': 61.92000000004191, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 0.27746887928797254, 'devicestatus': '正常'}, {'station': '12-15计', 'hourchanxi': None, 'pressure': 1.0803333333333331, 'temperature': 64.26666666666668, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 24 total bound parameter sets ...  {'station': '7-1计', 'hourchanxi': 12.780166666666664, 'pressure': 0.7201666666666664, 'temperature': 66.58833333333332, 'sumchanxi': 251859.61, 'diffhourchanxi': 12.779999999998836, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 0.0013041040244280155, 'devicestatus': '正常'}, {'station': '7-3计', 'hourchanxi': 10.975438596491225, 'pressure': 0.729649122807018, 'temperature': 50.62631578947366, 'sumchanxi': 65659.84, 'diffhourchanxi': 10.539999999993597, 'time': '2021-06-01 02:00:00', 'devicetype': '原油外输', 'stacheck': 3.9673913044061364, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-02 01:48:16,407 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 722, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-02 01:52:03,142 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 722, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-02 01:52:37,571 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 724, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-02 01:56:08,847 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 724, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-02 01:56:37,046 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 724, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-02 01:56:49,337 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 724, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'inf'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, hourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(hourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
