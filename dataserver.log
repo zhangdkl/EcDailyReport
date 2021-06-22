@@ -4746,3 +4746,1366 @@ sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Inv
 [parameters: ({'station': '10-3计', 'hourchanxi': 12.553666666666665, 'pressure': None, 'temperature': None, 'sumchanxi': 19205927.0, 'diffhourchanxi': 1227.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9674.036801996763, 'devicestatus': '底数异常'}, {'station': '10-4计', 'hourchanxi': 69.9783333333333, 'pressure': None, 'temperature': None, 'sumchanxi': 644376.12, 'diffhourchanxi': 70.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.030961964417610902, 'devicestatus': '正常'}, {'station': '10-5计', 'hourchanxi': 49.54249999999997, 'pressure': None, 'temperature': None, 'sumchanxi': 590964.36, 'diffhourchanxi': 49.67999999993481, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.2775394861681164, 'devicestatus': '正常'}, {'station': '10-7计', 'hourchanxi': 25.540500000000005, 'pressure': None, 'temperature': None, 'sumchanxi': 10175.82, 'diffhourchanxi': 25.649999999999636, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.42873083925385597, 'devicestatus': '正常'}, {'station': '10-9计', 'hourchanxi': None, 'pressure': None, 'temperature': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-11计', 'hourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 95200.8, 'diffhourchanxi': 0.35000000000582077, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': inf, 'devicestatus': '底数异常'}, {'station': '12-12计', 'hourchanxi': 89.05999999999993, 'pressure': 0.7425000000000004, 'temperature': 55.341666666666676, 'sumchanxi': 85968848.0, 'diffhourchanxi': 8952.0, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 9951.65057264766, 'devicestatus': '底数异常'}, {'station': '12-13计', 'hourchanxi': 27.987166666666667, 'pressure': 0.6701666666666671, 'temperature': 50.8816666666667, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 14 total bound parameter sets ...  {'station': '12-9计', 'hourchanxi': 86.83833333333341, 'pressure': None, 'temperature': None, 'sumchanxi': 1299100.5, 'diffhourchanxi': 87.25, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.47406099456836304, 'devicestatus': '正常'}, {'station': '6-1计', 'hourchanxi': 30.93999999999999, 'pressure': None, 'temperature': None, 'sumchanxi': 4183.27, 'diffhourchanxi': 30.790000000000873, 'time': '2021-05-26 12:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.484809308335868, 'devicestatus': '正常'})]
 (Background on this error at: http://sqlalche.me/e/14/f405)
 
+2021-06-03 23:49:18,153 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'avrhourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'avrhourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 400, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 649, in ExtractEcStationExTransmissionDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'avrhourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationExtransmissionAutoHour] (station, avrhourdata, pressure, temperature, sumdata, diffhourdata, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(avrhourdata)s, %(pressure)s, %(temperature)s, %(sumdata)s, %(diffhourdata)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'avrhourdata': 49.86283333333334, 'pressure': 1.5715000000000008, 'temperature': 61.865000000000016, 'sumdata': 492532.18, 'diffhourdata': 49.539999999979045, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.6474428181731141, 'devicestatus': '正常'}, {'station': '10-4计', 'avrhourdata': 112.95999999999991, 'pressure': 2.7038333333333333, 'temperature': 67.67999999999999, 'sumdata': 1040125.69, 'diffhourdata': 113.25, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.25672804532586024, 'devicestatus': '正常'}, {'station': '10-5计', 'avrhourdata': 57.247999999999955, 'pressure': 2.2900000000000005, 'temperature': 61.47500000000002, 'sumdata': 462342.72, 'diffhourdata': 57.35999999998603, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.19564002233453626, 'devicestatus': '正常'}, {'station': '10-9计', 'avrhourdata': None, 'pressure': 1.4109999999999985, 'temperature': 58.405000000000015, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-10计', 'avrhourdata': None, 'pressure': 0.9596666666666679, 'temperature': 75.4566666666667, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-12计', 'avrhourdata': 221.0366666666665, 'pressure': 0.8783333333333331, 'temperature': 45.971666666666685, 'sumdata': 2500856.96, 'diffhourdata': 220.64000000013039, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.1794574051979791, 'devicestatus': '正常'}, {'station': '12-13计', 'avrhourdata': 76.08466666666669, 'pressure': 1.222166666666666, 'temperature': 70.125, 'sumdata': 636492.72, 'diffhourdata': 76.71999999997206, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.8350346543395096, 'devicestatus': '正常'}, {'station': '12-15计', 'avrhourdata': None, 'pressure': 1.1333333333333335, 'temperature': 61.48, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 24 total bound parameter sets ...  {'station': '7-1计', 'avrhourdata': 13.141166666666662, 'pressure': 0.6871666666666669, 'temperature': 63.263333333333335, 'sumdata': 252751.19, 'diffhourdata': 13.190000000002328, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.3716057681509767, 'devicestatus': '正常'}, {'station': '7-3计', 'avrhourdata': 7.394500000000002, 'pressure': 0.6668333333333336, 'temperature': 51.76833333333335, 'sumdata': 66190.8, 'diffhourdata': 7.370000000009895, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.331327337752469, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-03 23:49:47,244 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'sumdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'sumdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 400, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationExTransmissionDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 649, in ExtractEcStationExTransmissionDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'sumdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationExtransmissionAutoHour] (station, evrhourdata, pressure, temperature, sumdata, diffhourdata, time, devicetype, stacheck, devicestatus) VALUES (%(station)s, %(evrhourdata)s, %(pressure)s, %(temperature)s, %(sumdata)s, %(diffhourdata)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s)]
+[parameters: ({'station': '10-3计', 'evrhourdata': 49.86283333333334, 'pressure': 1.5715000000000008, 'temperature': 61.865000000000016, 'sumdata': 492532.18, 'diffhourdata': 49.539999999979045, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.6474428181731141, 'devicestatus': '正常'}, {'station': '10-4计', 'evrhourdata': 112.95999999999991, 'pressure': 2.7038333333333333, 'temperature': 67.67999999999999, 'sumdata': 1040125.69, 'diffhourdata': 113.25, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.25672804532586024, 'devicestatus': '正常'}, {'station': '10-5计', 'evrhourdata': 57.247999999999955, 'pressure': 2.2900000000000005, 'temperature': 61.47500000000002, 'sumdata': 462342.72, 'diffhourdata': 57.35999999998603, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.19564002233453626, 'devicestatus': '正常'}, {'station': '10-9计', 'evrhourdata': None, 'pressure': 1.4109999999999985, 'temperature': 58.405000000000015, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-10计', 'evrhourdata': None, 'pressure': 0.9596666666666679, 'temperature': 75.4566666666667, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}, {'station': '12-12计', 'evrhourdata': 221.0366666666665, 'pressure': 0.8783333333333331, 'temperature': 45.971666666666685, 'sumdata': 2500856.96, 'diffhourdata': 220.64000000013039, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.1794574051979791, 'devicestatus': '正常'}, {'station': '12-13计', 'evrhourdata': 76.08466666666669, 'pressure': 1.222166666666666, 'temperature': 70.125, 'sumdata': 636492.72, 'diffhourdata': 76.71999999997206, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.8350346543395096, 'devicestatus': '正常'}, {'station': '12-15计', 'evrhourdata': None, 'pressure': 1.1333333333333335, 'temperature': 61.48, 'sumdata': None, 'diffhourdata': None, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': None, 'devicestatus': '无数据'}  ... displaying 10 of 24 total bound parameter sets ...  {'station': '7-1计', 'evrhourdata': 13.141166666666662, 'pressure': 0.6871666666666669, 'temperature': 63.263333333333335, 'sumdata': 252751.19, 'diffhourdata': 13.190000000002328, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.3716057681509767, 'devicestatus': '正常'}, {'station': '7-3计', 'evrhourdata': 7.394500000000002, 'pressure': 0.6668333333333336, 'temperature': 51.76833333333335, 'sumdata': 66190.8, 'diffhourdata': 7.370000000009895, 'time': '2021-06-03 23:00:00', 'devicetype': '原油外输', 'stacheck': 0.331327337752469, 'devicestatus': '正常'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-04 01:11:37,570 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'hourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'hourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 401, in extract_erchang_well_hour_monitor_data
+    ExtractEcStationChanxiInputDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 755, in ExtractEcStationChanxiInputDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'hourdata'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcStationChanxiInputAutoHour] (station, avrhourchanxi, pressure, temperature, sumchanxi, diffhourchanxi, time, devicetype, stacheck, devicestatus, hourdata) VALUES (%(station)s, %(avrhourchanxi)s, %(pressure)s, %(temperature)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(devicetype)s, %(stacheck)s, %(devicestatus)s, %(hourdata)s)]
+[parameters: ({'station': '10-3计', 'avrhourchanxi': 13.945438596491229, 'pressure': None, 'temperature': None, 'sumchanxi': 194565.35, 'diffhourchanxi': 13.75, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 1.4014517732013307, 'devicestatus': '正常', 'hourdata': 13.75}, {'station': '10-4计', 'avrhourchanxi': 88.0236363636363, 'pressure': None, 'temperature': None, 'sumchanxi': 657827.12, 'diffhourchanxi': 87.86999999999534, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.1745398963140601, 'devicestatus': '正常', 'hourdata': 87.86999999999534}, {'station': '10-5计', 'avrhourchanxi': 50.52090909090905, 'pressure': None, 'temperature': None, 'sumchanxi': 601178.16, 'diffhourchanxi': 50.20000000006985, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.6352005468898958, 'devicestatus': '正常', 'hourdata': 50.20000000006985}, {'station': '10-7计', 'avrhourchanxi': 26.193272727272735, 'pressure': None, 'temperature': None, 'sumchanxi': 15612.67, 'diffhourchanxi': 26.040000000000873, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.5851606588751026, 'devicestatus': '正常', 'hourdata': 26.040000000000873}, {'station': '10-9计', 'avrhourchanxi': 10.282909090909087, 'pressure': None, 'temperature': None, 'sumchanxi': 71607.26, 'diffhourchanxi': 10.209999999991851, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.7090317562147185, 'devicestatus': '正常', 'hourdata': 10.209999999991851}, {'station': '12-11计', 'avrhourchanxi': 60.0, 'pressure': None, 'temperature': None, 'sumchanxi': 104878.14, 'diffhourchanxi': 59.55999999999767, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.7333333333372138, 'devicestatus': '正常', 'hourdata': 59.55999999999767}, {'station': '12-12计', 'avrhourchanxi': 91.57818181818176, 'pressure': 1.1141818181818168, 'temperature': 56.65272727272724, 'sumchanxi': 878186.8, 'diffhourchanxi': 91.84000000008382, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.28589580695308897, 'devicestatus': '正常', 'hourdata': 91.84000000008382}, {'station': '12-13计', 'avrhourchanxi': 25.85642857142858, 'pressure': 1.0851785714285729, 'temperature': 43.323214285714286, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据', 'hourdata': 25.85642857142858}  ... displaying 10 of 16 total bound parameter sets ...  {'station': '12-9计', 'avrhourchanxi': 126.62107142857153, 'pressure': None, 'temperature': None, 'sumchanxi': 1318404.38, 'diffhourchanxi': 127.12999999988824, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': 0.40193039402909214, 'devicestatus': '正常', 'hourdata': 127.12999999988824}, {'station': '6-1计', 'avrhourchanxi': 0.0, 'pressure': None, 'temperature': None, 'sumchanxi': 9376.68, 'diffhourchanxi': 0.0, 'time': '2021-06-04 01:00:00', 'devicetype': '掺稀来油', 'stacheck': None, 'devicestatus': '无数据', 'hourdata': 0.0})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-05 01:44:46,335 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+cx_Oracle.DatabaseError: ORA-00942: 表或视图不存在
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 400, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellParameterDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 771, in ExtractEcWellParameterDataHour
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-00942: 表或视图不存在
+[SQL: SELECT JH, RQ, SCSJ, YY, TY, HY, JKWD, BJ, BS, CC, CC1, DY, DL, SXDL, XXDL, RCYL1, HS, DBDS, HDL, BPQSCPL, SXGL, XXGL, BPQSXGL, BPQXXGL, CXYL, CXRY, CXGY, CQWD, CHWD, DMYYMD, HHYMD, SMD FROM SCZH.SSC_YJ_RD WHERE RQ=TO_DATE('2021-06-04 00:00:00', 'yyyy-mm-dd,hh24:mi:ss') ]
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-06-05 11:59:21,919 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+cx_Oracle.DatabaseError: ORA-00942: 表或视图不存在
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 396, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellAutoIndicatorDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 427, in ExtractEcWellAutoIndicatorDataHour
+    shicedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-00942: 表或视图不存在
+[SQL: SELECT JH, CJSJ, cc, cc1, WY, ZH FROM ssc_sgt_gtcj WHERE CJSJ >= TO_DATE('2021-06-05 10:00:00', 'yyyy-mm-dd,hh24:mi:ss') and CJSJ <= TO_DATE('2021-06-05 11:00:00', 'yyyy-mm-dd,hh24:mi:ss')]
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-06-05 17:29:53,535 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 404, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellParameterDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 781, in ExtractEcWellParameterDataHour
+    realtimedata.sort_values("time")
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 5455, in sort_values
+    k = self._get_label_or_level_values(by, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 1684, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'time'
+
+2021-06-05 17:32:54,489 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 404, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellParameterDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 784, in ExtractEcWellParameterDataHour
+    realtimedata = realtimedata.groupby("wellname").mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 6727, in groupby
+    dropna=dropna,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 568, in __init__
+    dropna=self.dropna,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\grouper.py", line 811, in get_grouper
+    raise KeyError(gpr)
+KeyError: 'wellname'
+
+2021-06-08 00:19:12,366 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 980, in extract_erchang_well_relegation_data
+    ExtractErchangWellRelegationData()
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1005, in ExtractErchangWellRelegationData
+    staticdatanow = staticdata[staticdata["RQ"].str == str(datenow)]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5461, in __getattr__
+    return object.__getattribute__(self, name)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\accessor.py", line 180, in __get__
+    accessor_obj = self._accessor(obj)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 154, in __init__
+    self._inferred_dtype = self._validate(data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\strings\accessor.py", line 217, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!
+
+2021-06-08 00:24:30,516 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 980, in extract_erchang_well_relegation_data
+    ExtractErchangWellRelegationData()
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1012, in ExtractErchangWellRelegationData
+    staticdata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellStaticDataHistory] ([JH], [RQ], [DWMC], [CYQ], [DYFS], [CXFS], [SCFS], [ISCX], [JB], [SCZT], [ZYLX]) VALUES (%(JH)s, %(RQ)s, %(DWMC)s, %(CYQ)s, %(DYFS)s, %(CXFS)s, %(SCFS)s, %(ISCX)s, %(JB)s, %(SCZT)s, %(ZYLX)s)]
+[parameters: ({'JH': 'AD10CH2', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '12-1计', 'CXFS': '12-1计', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水焖井', 'ZYLX': None}, {'JH': 'AD11CH2', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '12-1计（港西）', 'SCFS': '电潜泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水', 'ZYLX': None}, {'JH': 'AD12CH', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '单井', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD13CH', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-12计', 'CXFS': '12-12计', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD14', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-10计', 'CXFS': '12-10计（港西）', 'SCFS': '油管自喷', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水焖井', 'ZYLX': None}, {'JH': 'AD15', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-11计', 'CXFS': '12-11计', 'SCFS': '油管自喷', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD16', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-7计', 'CXFS': '12-7计（港西）', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD17', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-11计', 'CXFS': '12-11计', 'SCFS': '电潜泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}  ... displaying 10 of 1866 total bound parameter sets ...  {'JH': '艾丁鹰1', 'RQ': datetime.datetime(2021, 6, 6, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '不掺稀', 'SCFS': '油管自喷', 'ISCX': '不掺稀', 'JB': '新井', 'SCZT': '关井', 'ZYLX': None}, {'JH': '塔深304X', 'RQ': datetime.datetime(2021, 6, 6, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '单井', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-08 00:27:44,422 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 980, in extract_erchang_well_relegation_data
+    ExtractErchangWellRelegationData()
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1014, in ExtractErchangWellRelegationData
+    staticdata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (2627, b"Violation of PRIMARY KEY constraint 'PK__ecsjb__D135A7B104E4BC85_copy1_copy1_copy1'. Cannot insert duplicate key in object 'dbo.EcWellStaticDataHistory'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellStaticDataHistory] ([JH], [RQ], [DWMC], [CYQ], [DYFS], [CXFS], [SCFS], [ISCX], [JB], [SCZT], [ZYLX]) VALUES (%(JH)s, %(RQ)s, %(DWMC)s, %(CYQ)s, %(DYFS)s, %(CXFS)s, %(SCFS)s, %(ISCX)s, %(JB)s, %(SCZT)s, %(ZYLX)s)]
+[parameters: ({'JH': 'AD10CH2', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '12-1计', 'CXFS': '12-1计', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水焖井', 'ZYLX': None}, {'JH': 'AD11CH2', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '12-1计（港西）', 'SCFS': '电潜泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水', 'ZYLX': None}, {'JH': 'AD12CH', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '单井', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD13CH', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-12计', 'CXFS': '12-12计', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD14', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-10计', 'CXFS': '12-10计（港西）', 'SCFS': '油管自喷', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '注水焖井', 'ZYLX': None}, {'JH': 'AD15', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-11计', 'CXFS': '12-11计', 'SCFS': '油管自喷', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD16', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-7计', 'CXFS': '12-7计（港西）', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}, {'JH': 'AD17', 'RQ': datetime.datetime(2021, 6, 7, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '12-11计', 'CXFS': '12-11计', 'SCFS': '电潜泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None}  ... displaying 10 of 1866 total bound parameter sets ...  {'JH': '艾丁鹰1', 'RQ': datetime.datetime(2021, 6, 6, 0, 0), 'DWMC': '管理二区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '不掺稀', 'SCFS': '油管自喷', 'ISCX': '不掺稀', 'JB': '新井', 'SCZT': '关井', 'ZYLX': None}, {'JH': '塔深304X', 'RQ': datetime.datetime(2021, 6, 6, 0, 0), 'DWMC': '管理三区', 'CYQ': '塔河十二区', 'DYFS': '倒油', 'CXFS': '单井', 'SCFS': '抽稠泵', 'ISCX': '掺稀', 'JB': '自然', 'SCZT': '关井', 'ZYLX': None})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-08 02:00:13,388 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+cx_Oracle.DatabaseError: ORA-00942: 表或视图不存在
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 851, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 958, in ExtractEcWellParameterDataDay
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-00942: 表或视图不存在
+[SQL: SELECT JH, RQ, SCSJ, YY, TY, HY, JKWD, BJ, BS, CC, CC1, DY, DL, SXDL, XXDL, RCYL1, HS, DBDS, HDL, BPQSCPL, SXGL, XXGL, BPQSXGL, BPQXXGL, CXYL, CXRY, CXGY, CQWD, CHWD, DMYYMD, HHYMD, SMD FROM SCZH.SSC_YJ_RD WHERE RQ=TO_DATE('2021-06-07 00:00:00', 'yyyy-mm-dd,hh24:mi:ss') ]
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-06-08 02:31:36,978 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+cx_Oracle.DatabaseError: ORA-00942: 表或视图不存在
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 974, in ExtractEcWellParameterDataDay
+    pcsdata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 527, in read_sql
+    chunksize=chunksize,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1308, in read_query
+    result = self.execute(*args)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1176, in execute
+    return self.connectable.execution_options().execute(*args, **kwargs)
+  File "<string>", line 2, in execute
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 3038, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1191, in execute
+    future=False,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1492, in _exec_driver_sql
+    distilled_parameters,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1707, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (cx_Oracle.DatabaseError) ORA-00942: 表或视图不存在
+[SQL: SELECT JH, RQ, YY, JKWD, CC, CC1, DY, DL, SXDL, XXDL FROM SCZH.SSC_YJ_RD WHERE RQ=TO_DATE('2021-06-08 00:00:00', 'yyyy-mm-dd,hh24:mi:ss') ]
+(Background on this error at: http://sqlalche.me/e/14/4xp6)
+
+2021-06-08 02:31:57,606 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 976, in ExtractEcWellParameterDataDay
+    print("重新提取数据%s次" % checktime + 1)
+TypeError: can only concatenate str (not "int") to str
+
+2021-06-08 02:37:58,722 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 998, in ExtractEcWellParameterDataDay
+    dailydata.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 12 elements, new values have 10 elements
+
+2021-06-08 02:38:59,997 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1000, in ExtractEcWellParameterDataDay
+    dailydata.sort_values("date")
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 5455, in sort_values
+    k = self._get_label_or_level_values(by, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 1684, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'date'
+
+2021-06-08 21:22:29,492 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1002, in ExtractEcWellParameterDataDay
+    dailydatamean = gbydailydata.mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 1499, in mean
+    numeric_only=numeric_only,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1016, in _cython_agg_general
+    how, alt=alt, numeric_only=numeric_only, min_count=min_count
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1121, in _cython_agg_blocks
+    raise DataError("No numeric types to aggregate")
+pandas.core.base.DataError: No numeric types to aggregate
+
+2021-06-08 21:23:02,420 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1004, in ExtractEcWellParameterDataDay
+    dailydatamean = gbydailydata.mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 1499, in mean
+    numeric_only=numeric_only,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1016, in _cython_agg_general
+    how, alt=alt, numeric_only=numeric_only, min_count=min_count
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1121, in _cython_agg_blocks
+    raise DataError("No numeric types to aggregate")
+pandas.core.base.DataError: No numeric types to aggregate
+
+2021-06-08 21:24:30,956 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1004, in ExtractEcWellParameterDataDay
+    dailydatamean = gbydailydata.mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 1499, in mean
+    numeric_only=numeric_only,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1016, in _cython_agg_general
+    how, alt=alt, numeric_only=numeric_only, min_count=min_count
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1121, in _cython_agg_blocks
+    raise DataError("No numeric types to aggregate")
+pandas.core.base.DataError: No numeric types to aggregate
+
+2021-06-08 21:52:30,711 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1006, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 10 elements, new values have 12 elements
+
+2021-06-08 21:52:40,341 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1006, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 10 elements, new values have 11 elements
+
+2021-06-08 21:53:05,822 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1007, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 10 elements, new values have 11 elements
+
+2021-06-09 01:31:50,473 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1004, in ExtractEcWellParameterDataDay
+    dailydatamean = gbydailydata.mean()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\groupby.py", line 1499, in mean
+    numeric_only=numeric_only,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1016, in _cython_agg_general
+    how, alt=alt, numeric_only=numeric_only, min_count=min_count
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\groupby\generic.py", line 1121, in _cython_agg_blocks
+    raise DataError("No numeric types to aggregate")
+pandas.core.base.DataError: No numeric types to aggregate
+
+2021-06-09 01:36:17,288 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1010, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 6 elements, new values have 4 elements
+
+2021-06-09 01:36:48,142 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1010, in ExtractEcWellParameterDataDay
+    dailydatamax.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 5 elements, new values have 4 elements
+
+2021-06-09 01:37:49,701 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1011, in ExtractEcWellParameterDataDay
+    dailydatamax.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 5 elements, new values have 4 elements
+
+2021-06-09 01:47:26,904 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1033, in ExtractEcWellParameterDataDay
+    get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' and %s < '%s'" % (StrFieds, tablename, "date", endtime)
+TypeError: not enough arguments for format string
+
+2021-06-09 01:47:42,040 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1033, in ExtractEcWellParameterDataDay
+    get_data_sql = "SELECT %s FROM %s WHERE %s = '%s' and %s < '%s'" % (StrFieds, tablename, "date", endtime)
+TypeError: not enough arguments for format string
+
+2021-06-09 01:51:04,442 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1040, in ExtractEcWellParameterDataDay
+    if checktime == checktimes - 1:
+NameError: name 'checktime' is not defined
+
+2021-06-09 02:04:25,334 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1039, in ExtractEcWellParameterDataDay
+    returndata = pd.concat([dailydatamean, dailydatamax, dailydatamin, indicatedata], axis=1, join='left')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 295, in concat
+    sort=sort,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 331, in __init__
+    "Only can inner (intersect) or outer (union) join the other axis"
+ValueError: Only can inner (intersect) or outer (union) join the other axis
+
+2021-06-09 02:12:41,605 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 963, in ExtractEcWellParameterDataDay
+    pcsdata.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 9 elements, new values have 10 elements
+
+2021-06-09 02:15:40,947 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1005, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 6 elements, new values have 4 elements
+
+2021-06-09 02:16:46,965 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1006, in ExtractEcWellParameterDataDay
+    dailydatamean.columns = FieldName
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 6 elements, new values have 4 elements
+
+2021-06-09 02:38:42,206 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1058, in ExtractEcWellParameterDataDay
+    returndata["dlmean"] = returndata.apply(replacedata, axis=1, args=('DL', 'dlmean'))
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 7768, in apply
+    return op.get_result()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\apply.py", line 185, in get_result
+    return self.apply_standard()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\apply.py", line 276, in apply_standard
+    results, res_index = self.apply_series_generator()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\apply.py", line 290, in apply_series_generator
+    results[i] = self.f(v)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\apply.py", line 110, in f
+    return func(x, *args, **kwds)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 954, in replacedata
+    if bedata >= 0:
+TypeError: '>=' not supported between instances of 'NoneType' and 'int'
+
+2021-06-09 03:02:26,453 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1059, in ExtractEcWellParameterDataDay
+    "stroke", "speed", "maxload"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 5478, in __setattr__
+    return object.__setattr__(self, name, value)
+  File "pandas\_libs\properties.pyx", line 66, in pandas._libs.properties.AxisProperty.__set__
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 670, in _set_axis
+    self._mgr.set_axis(axis, labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\internals\managers.py", line 221, in set_axis
+    f"Length mismatch: Expected axis has {old_len} elements, new "
+ValueError: Length mismatch: Expected axis has 18 elements, new values have 17 elements
+
+2021-06-09 03:20:52,637 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'dymean'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'dymean'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 861, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1084, in ExtractEcWellParameterDataDay
+    returndata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'dymean'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellParameterRealtimeAutoDaily] (wellname, dymean, dlmean, sxdlmean, xxdlmean, lwmean, cwmean, yymax, tymax, hymax, jwmax, yymin, tymin, hymin, jwmin, date) VALUES (%(wellname)s, %(dymean)s, %(dlmean)s, %(sxdlmean)s, %(xxdlmean)s, %(lwmean)s, %(cwmean)s, %(yymax)s, %(tymax)s, %(hymax)s, %(jwmax)s, %(yymin)s, %(tymin)s, %(hymin)s, %(jwmin)s, %(date)s)]
+[parameters: ({'wellname': 'AD10CH2', 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD11CH2', 'dymean': 0.0, 'dlmean': 0.8000000000000003, 'sxdlmean': 1.0869565217391306, 'xxdlmean': 1.1695652173913045, 'lwmean': None, 'cwmean': None, 'yymax': 13.6, 'tymax': 5.5, 'hymax': 5.5, 'jwmax': 39.7, 'yymin': 12.7, 'tymin': 4.6, 'hymin': 0.0, 'jwmin': 18.5, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD13CH', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 3.0, 'tymax': 1.6, 'hymax': 1.6, 'jwmax': 41.7, 'yymin': 2.9, 'tymin': 1.6, 'hymin': 1.59, 'jwmin': 19.3, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD14', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 28.2, 'tymax': 14.3, 'hymax': 14.3, 'jwmax': 41.3, 'yymin': 28.2, 'tymin': 14.2, 'hymin': 14.290000000000001, 'jwmin': 16.5, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD15', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 14.5, 'tymax': 14.9, 'hymax': 14.49, 'jwmax': 41.9, 'yymin': 14.5, 'tymin': 14.9, 'hymin': 0.1, 'jwmin': 17.1, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD16', 'dymean': 243.36086956521743, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 0.1, 'tymax': 0.0, 'hymax': 0.0, 'jwmax': 37.7, 'yymin': 0.1, 'tymin': 0.0, 'hymin': 0.0, 'jwmin': 21.7, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD17', 'dymean': 0.7434782608695653, 'dlmean': 0.4130434782608696, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 25.40869565217391, 'cwmean': 27.713043478260868, 'yymax': 5.8, 'tymax': 5.8, 'hymax': 5.8, 'jwmax': None, 'yymin': 5.8, 'tymin': 5.8, 'hymin': 0.0, 'jwmin': None, 'date': '2021-06-09 00:00:00'}, {'wellname': 'AD19', 'dymean': 0.0, 'dlmean': 26.952173913043477, 'sxdlmean': 28.573913043478264, 'xxdlmean': 28.095652173913045, 'lwmean': 115.39565217391306, 'cwmean': 30.786956521739135, 'yymax': 1.3, 'tymax': 0.0, 'hymax': 0.0, 'jwmax': 39.4, 'yymin': 1.1, 'tymin': 0.0, 'hymin': -0.01, 'jwmin': 21.6, 'date': '2021-06-09 00:00:00'}  ... displaying 10 of 875 total bound parameter sets ...  {'wellname': 'TS3-3CH', 'dymean': 229.81739130434786, 'dlmean': 1.9826086956521751, 'sxdlmean': 10.560869565217393, 'xxdlmean': 0.0, 'lwmean': 29.469565217391306, 'cwmean': 29.495652173913044, 'yymax': 0.0, 'tymax': 0.0, 'hymax': 0.0, 'jwmax': 40.7, 'yymin': 0.0, 'tymin': 0.0, 'hymin': -0.01, 'jwmin': 17.2, 'date': '2021-06-09 00:00:00'}, {'wellname': 'TS3CX', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 102.96521739130434, 'cwmean': 62.66521739130437, 'yymax': 7.9, 'tymax': 8.0, 'hymax': 7.890000000000001, 'jwmax': 34.2, 'yymin': 3.3, 'tymin': 7.8, 'hymin': 0.7, 'jwmin': 28.2, 'date': '2021-06-09 00:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-15 01:49:21,148 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 860, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1086, in ExtractEcWellParameterDataDay
+    returndata = pd.concat([staticdata, returndata], axis=1, join='outer')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 298, in concat
+    return op.get_result()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 516, in get_result
+    indexers[ax] = obj_labels.get_indexer(new_labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3172, in get_indexer
+    "Reindexing only valid with uniquely valued Index objects"
+pandas.errors.InvalidIndexError: Reindexing only valid with uniquely valued Index objects
+
+2021-06-15 01:51:00,716 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 860, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1087, in ExtractEcWellParameterDataDay
+    returndata = pd.concat([staticdata, returndata], axis=1, join='outer')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 298, in concat
+    return op.get_result()
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\reshape\concat.py", line 516, in get_result
+    indexers[ax] = obj_labels.get_indexer(new_labels)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3172, in get_indexer
+    "Reindexing only valid with uniquely valued Index objects"
+pandas.errors.InvalidIndexError: Reindexing only valid with uniquely valued Index objects
+
+2021-06-17 01:56:10,044 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (515, b"Cannot insert the value NULL into column 'date', table 'cyec.dbo.EcWellParameterRealtimeAutoDaily'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (515, b"Cannot insert the value NULL into column 'date', table 'cyec.dbo.EcWellParameterRealtimeAutoDaily'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 857, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1122, in ExtractEcWellParameterDataDay
+    returndata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (515, b"Cannot insert the value NULL into column 'date', table 'cyec.dbo.EcWellParameterRealtimeAutoDaily'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellParameterRealtimeAutoDaily] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, protype, welltype, dymean, dlmean, sxdlmean, xxdlmean, lwmean, cwmean, yymax, tymax, hymax, jwmax, yymin, tymin, hymin, jwmin, stroke, speed, maxload, date) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(protype)s, %(welltype)s, %(dymean)s, %(dlmean)s, %(sxdlmean)s, %(xxdlmean)s, %(lwmean)s, %(cwmean)s, %(yymax)s, %(tymax)s, %(hymax)s, %(jwmax)s, %(yymin)s, %(tymin)s, %(hymin)s, %(jwmin)s, %(stroke)s, %(speed)s, %(maxload)s, %(date)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.782608695652174, 'sxdlmean': 1.091304347826087, 'xxdlmean': 1.1130434782608696, 'lwmean': None, 'cwmean': None, 'yymax': 12.49, 'tymax': 13.0, 'hymax': 0.0, 'jwmax': 29.7, 'yymin': 12.48, 'tymin': 13.0, 'hymin': 0.0, 'jwmin': 14.4, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 3.0, 'tymax': 1.7, 'hymax': 2.99, 'jwmax': 19.6, 'yymin': 2.9, 'tymin': 1.7, 'hymin': 2.9800000000000004, 'jwmin': 19.6, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '措施', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 28.11, 'tymax': 14.1, 'hymax': 28.099999999999998, 'jwmax': 25.9, 'yymin': 28.1, 'tymin': 14.1, 'hymin': 28.089999999999996, 'jwmin': 13.1, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 0.0, 'cwmean': 0.0, 'yymax': 14.7, 'tymax': 15.0, 'hymax': 0.1, 'jwmax': 25.2, 'yymin': 14.7, 'tymin': 15.0, 'hymin': 0.1, 'jwmin': 13.4, 'stroke': 0.0, 'speed': 0.0, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': 247.53043478260872, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 0.14, 'tymax': 0.0, 'hymax': 1.9, 'jwmax': 28.2, 'yymin': 0.1, 'tymin': 0.0, 'hymin': 0.2, 'jwmin': 17.8, 'stroke': 0.0, 'speed': 3.0, 'maxload': None, 'date': '2021-06-16 00:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'dymean': 1.4913043478260868, 'dlmean': 0.32173913043478264, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 21.186956521739127, 'cwmean': 22.947826086956525, 'yymax': 5.83, 'tymax': 5.8, 'hymax': 0.1, 'jwmax': None, 'yymin': 5.8, 'tymin': 5.8, 'hymin': 0.0, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'date': '2021-06-16 00:00:00'}  ... displaying 10 of 942 total bound parameter sets ...  {'wellname': 'TH12365X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'date': None}, {'wellname': 'TH12374X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': 7.64, 'tymax': None, 'hymax': 7.63, 'jwmax': 30.9, 'yymin': 7.63, 'tymin': None, 'hymin': 7.62, 'jwmin': 30.889999999999997, 'stroke': None, 'speed': None, 'maxload': None, 'date': None})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-17 02:44:58,480 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellChanxiRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellChanxiRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 562, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellChanxiRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, hourchanxi, basedata, sumchanxi, diffhourchanxi, time) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(hourchanxi)s, %(basedata)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': None}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3446.844, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 49.985, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 794.7818, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}  ... displaying 10 of 946 total bound parameter sets ...  {'wellname': 'TK6119X-JRL', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'}, {'wellname': 'TK618CH3-JRL', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'hourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-17 02:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-17 02:46:26,897 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellParameterRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.IntegrityError: (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellParameterRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 414, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellParameterDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 842, in ExtractEcWellParameterDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 477, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.IntegrityError: (pymssql._pymssql.IntegrityError) (515, b"Cannot insert the value NULL into column 'time', table 'cyec.dbo.EcWellParameterRealtimeAutoHour'; column does not allow nulls. INSERT fails.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellParameterRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, protype, welltype, [YY], [TY], [HY], [JW], [LW], [CW], time, date, [DY], [DL], [SXDL], [XXDL]) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(protype)s, %(welltype)s, %(YY)s, %(TY)s, %(HY)s, %(JW)s, %(LW)s, %(CW)s, %(time)s, %(date)s, %(DY)s, %(DL)s, %(SXDL)s, %(XXDL)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'YY': None, 'TY': None, 'HY': None, 'JW': None, 'LW': None, 'CW': None, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': None, 'DL': None, 'SXDL': None, 'XXDL': None}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'YY': 12.3, 'TY': 12.4, 'HY': 0.0, 'JW': 20.0, 'LW': None, 'CW': None, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.8, 'SXDL': 1.1, 'XXDL': 1.0}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'YY': None, 'TY': None, 'HY': None, 'JW': None, 'LW': None, 'CW': None, 'time': None, 'date': None, 'DY': None, 'DL': None, 'SXDL': None, 'XXDL': None}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'YY': 2.9, 'TY': 1.7, 'HY': None, 'JW': 22.5, 'LW': None, 'CW': None, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '措施', 'YY': 28.1, 'TY': 14.1, 'HY': None, 'JW': 20.7, 'LW': None, 'CW': None, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '自然', 'YY': None, 'TY': 15.0, 'HY': 0.1, 'JW': 21.0, 'LW': 0.0, 'CW': 0.0, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'YY': 0.1, 'TY': 0.0, 'HY': 0.8, 'JW': 25.2, 'LW': None, 'CW': None, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'YY': 5.8, 'TY': 5.8, 'HY': 0.0, 'JW': None, 'LW': 23.4, 'CW': 24.0, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.3, 'SXDL': 0.0, 'XXDL': 0.0}  ... displaying 10 of 946 total bound parameter sets ...  {'wellname': 'TK6119X-JRL', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'YY': None, 'TY': None, 'HY': None, 'JW': None, 'LW': 29.0, 'CW': 26.8, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0}, {'wellname': 'TK618CH3-JRL', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'YY': 0.8, 'TY': None, 'HY': None, 'JW': None, 'LW': None, 'CW': 55.9, 'time': '2021-06-17 02:00:00', 'date': '2021-06-17 00:00:00', 'DY': 0.0, 'DL': 0.0, 'SXDL': 0.0, 'XXDL': 0.0})]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+
+2021-06-17 02:58:24,127 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'wellname'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 856, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1110, in ExtractEcWellParameterDataDay
+    returndata["check"] = returndata["wellname"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'wellname'
+
+2021-06-17 02:58:41,256 - logger - INFO - Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3080, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4554, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 4562, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'wellname'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 856, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1110, in ExtractEcWellParameterDataDay
+    returndata["check"] = returndata["wellname"]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\frame.py", line 3024, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexes\base.py", line 3082, in get_loc
+    raise KeyError(key) from err
+KeyError: 'wellname'
+
+2021-06-17 03:08:12,185 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 856, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1111, in ExtractEcWellParameterDataDay
+    returndata = returndata[returndata["check"].str.isin(["-JRL"])]
+AttributeError: 'StringMethods' object has no attribute 'isin'
+
+2021-06-17 03:09:46,057 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'check'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'check'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 856, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellParameterDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 1123, in ExtractEcWellParameterDataDay
+    returndata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'check'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellParameterRealtimeAutoDaily] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, protype, welltype, dymean, dlmean, sxdlmean, xxdlmean, lwmean, cwmean, yymax, tymax, hymax, jwmax, yymin, tymin, hymin, jwmin, stroke, speed, maxload, [check], date) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(protype)s, %(welltype)s, %(dymean)s, %(dlmean)s, %(sxdlmean)s, %(xxdlmean)s, %(lwmean)s, %(cwmean)s, %(yymax)s, %(tymax)s, %(hymax)s, %(jwmax)s, %(yymin)s, %(tymin)s, %(hymin)s, %(jwmin)s, %(stroke)s, %(speed)s, %(maxload)s, %(check)s, %(date)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD10CH2', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.7, 'sxdlmean': 1.1, 'xxdlmean': 1.0, 'lwmean': None, 'cwmean': None, 'yymax': 12.6, 'tymax': 13.0, 'hymax': 0.0, 'jwmax': 35.4, 'yymin': 12.3, 'tymin': 12.4, 'hymin': 0.0, 'jwmin': 15.6, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD11CH2', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD12CH', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 2.9, 'tymax': 1.7, 'hymax': 2.9, 'jwmax': 38.2, 'yymin': 2.9, 'tymin': 1.7, 'hymin': 2.9, 'jwmin': 22.5, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD13CH', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '措施', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 28.2, 'tymax': 14.1, 'hymax': 28.2, 'jwmax': 38.0, 'yymin': 28.1, 'tymin': 14.1, 'hymin': 28.2, 'jwmin': 12.9, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD14', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '油管自喷', 'welltype': '自然', 'dymean': 0.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 0.0, 'cwmean': 0.0, 'yymax': 14.7, 'tymax': 15.1, 'hymax': 0.1, 'jwmax': 37.4, 'yymin': 14.7, 'tymin': 15.0, 'hymin': 0.1, 'jwmin': 14.2, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD15', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '抽稠泵', 'welltype': '自然', 'dymean': 174.0, 'dlmean': 0.0, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': None, 'cwmean': None, 'yymax': 0.1, 'tymax': 0.0, 'hymax': 2.4, 'jwmax': 35.5, 'yymin': 0.1, 'tymin': 0.0, 'hymin': 0.3, 'jwmin': 19.1, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD16', 'date': '2021-06-17 00:00:00'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'protype': '电潜泵', 'welltype': '自然', 'dymean': 2.0, 'dlmean': 0.3, 'sxdlmean': 0.0, 'xxdlmean': 0.0, 'lwmean': 21.8, 'cwmean': 24.2, 'yymax': 5.8, 'tymax': 5.8, 'hymax': 0.1, 'jwmax': None, 'yymin': 5.8, 'tymin': 5.8, 'hymin': 0.0, 'jwmin': None, 'stroke': None, 'speed': None, 'maxload': None, 'check': 'AD17', 'date': '2021-06-17 00:00:00'}  ... displaying 10 of 938 total bound parameter sets ...  {'wellname': 'AD23', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': 4.6, 'speed': 3.0, 'maxload': 102.8, 'check': 'AD23', 'date': '2021-06-17 00:00:00'}, {'wellname': 'TH12389', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'protype': None, 'welltype': None, 'dymean': None, 'dlmean': None, 'sxdlmean': None, 'xxdlmean': None, 'lwmean': None, 'cwmean': None, 'yymax': None, 'tymax': None, 'hymax': None, 'jwmax': None, 'yymin': None, 'tymin': None, 'hymin': None, 'jwmin': None, 'stroke': 4.2, 'speed': 3.1, 'maxload': 82.5, 'check': 'TH12389', 'date': '2021-06-17 00:00:00'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-19 16:55:43,481 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 605, in ExtractEcWellChanxiDataHour
+    realtimedata["devicelocation"] = realtimedata["chanxistation"].map(checklocation)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\series.py", line 3909, in map
+    new_values = super()._map_values(arg, na_action=na_action)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\base.py", line 937, in _map_values
+    new_values = map_f(values, mapper)
+  File "pandas\_libs\lib.pyx", line 2467, in pandas._libs.lib.map_infer
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 493, in checklocation
+    if "港西" in x or "单井" in x:
+TypeError: argument of type 'float' is not iterable
+
+2021-06-19 16:56:48,026 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 605, in ExtractEcWellChanxiDataHour
+    realtimedata["devicelocation"] = realtimedata["chanxistation"].map(checklocation)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\series.py", line 3909, in map
+    new_values = super()._map_values(arg, na_action=na_action)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\base.py", line 937, in _map_values
+    new_values = map_f(values, mapper)
+  File "pandas\_libs\lib.pyx", line 2467, in pandas._libs.lib.map_infer
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 493, in checklocation
+    if ("港西" in x) or ("单井" in x):
+TypeError: argument of type 'float' is not iterable
+
+2021-06-19 16:57:18,286 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 606, in ExtractEcWellChanxiDataHour
+    realtimedata["devicelocation"] = realtimedata["chanxistation"].map(checklocation)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\series.py", line 3909, in map
+    new_values = super()._map_values(arg, na_action=na_action)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\base.py", line 937, in _map_values
+    new_values = map_f(values, mapper)
+  File "pandas\_libs\lib.pyx", line 2467, in pandas._libs.lib.map_infer
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 494, in checklocation
+    if ("港西" in x) or ("单井" in x):
+TypeError: argument of type 'float' is not iterable
+
+2021-06-19 17:15:15,649 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'stacheck'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'stacheck'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 620, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'stacheck'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, avrhourchanxi, basedata, sumchanxi, diffhourchanxi, time, stacheck, devicelocation, devicestatus) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(avrhourchanxi)s, %(basedata)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(stacheck)s, %(devicelocation)s, %(devicestatus)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站内', 'devicestatus': '关井'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站外', 'devicestatus': '关井'}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站外', 'devicestatus': '关井'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站内', 'devicestatus': '关井'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3446.844, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站外', 'devicestatus': '关井'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站内', 'devicestatus': '关井'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站外', 'devicestatus': '关井'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '站内', 'devicestatus': '关井'}  ... displaying 10 of 938 total bound parameter sets ...  {'wellname': 'TH12365X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 338.2864, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '未知', 'devicestatus': '关井'}, {'wellname': 'TH12374X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 518.181, 'diffhourchanxi': 0.0, 'time': '2021-06-19 17:00:00', 'stacheck': None, 'devicelocation': '未知', 'devicestatus': '关井'})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
+2021-06-20 00:36:20,732 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 619, in ExtractEcWellChanxiDataHour
+    realtimedata["station"] = realtimedata["chanxistation"].map(lambda x: x[:5] if "港西" in x else x)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\series.py", line 3909, in map
+    new_values = super()._map_values(arg, na_action=na_action)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\base.py", line 937, in _map_values
+    new_values = map_f(values, mapper)
+  File "pandas\_libs\lib.pyx", line 2467, in pandas._libs.lib.map_infer
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 619, in <lambda>
+    realtimedata["station"] = realtimedata["chanxistation"].map(lambda x: x[:5] if "港西" in x else x)
+TypeError: argument of type 'float' is not iterable
+
+2021-06-20 00:42:14,444 - logger - INFO - Traceback (most recent call last):
+  File "src\pymssql\_pymssql.pyx", line 460, in pymssql._pymssql.Cursor.execute
+  File "src\pymssql\_mssql.pyx", line 1104, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1135, in pymssql._mssql.MSSQLConnection.execute_query
+  File "src\pymssql\_mssql.pyx", line 1268, in pymssql._mssql.MSSQLConnection.format_and_run_query
+  File "src\pymssql\_mssql.pyx", line 1806, in pymssql._mssql.check_cancel_and_raise
+  File "src\pymssql\_mssql.pyx", line 1852, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (207, b"Invalid column name 'station'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+pymssql._pymssql.ProgrammingError: (207, b"Invalid column name 'station'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 408, in extract_erchang_well_hour_monitor_data
+    ExtractEcWellChanxiDataHour(exhour)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 631, in ExtractEcWellChanxiDataHour
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\generic.py", line 2789, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 610, in to_sql
+    method=method,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1419, in to_sql
+    raise err
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 1411, in to_sql
+    table.insert(chunksize, method=method)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 845, in insert
+    exec_insert(conn, keys, chunk_iter)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\io\sql.py", line 762, in _execute_insert
+    conn.execute(self.table.insert(), data)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1201, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 314, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1400, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1750, in _execute_context
+    e, statement, parameters, cursor, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1931, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1687, in _execute_context
+    cursor, statement, parameters, context
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\sqlalchemy\engine\default.py", line 714, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "src\pymssql\_pymssql.pyx", line 486, in pymssql._pymssql.Cursor.executemany
+  File "src\pymssql\_pymssql.pyx", line 475, in pymssql._pymssql.Cursor.execute
+sqlalchemy.exc.ProgrammingError: (pymssql._pymssql.ProgrammingError) (207, b"Invalid column name 'station'.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n")
+[SQL: INSERT INTO [EcWellChanxiRealtimeAutoHour] (wellname, compname, exportstation, chanxistation, area, prostatus, ischanxi, avrhourchanxi, basedata, sumchanxi, diffhourchanxi, time, stacheck, devicelocation, hourchanxi, setcheck, devicestatus, station) VALUES (%(wellname)s, %(compname)s, %(exportstation)s, %(chanxistation)s, %(area)s, %(prostatus)s, %(ischanxi)s, %(avrhourchanxi)s, %(basedata)s, %(sumchanxi)s, %(diffhourchanxi)s, %(time)s, %(stacheck)s, %(devicelocation)s, %(hourchanxi)s, %(setcheck)s, %(devicestatus)s, %(station)s)]
+[parameters: ({'wellname': 'AD10CH2', 'compname': '管理二区', 'exportstation': '12-1计', 'chanxistation': '12-1计', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站内', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-1计'}, {'wellname': 'AD11CH2', 'compname': '管理二区', 'exportstation': '倒油', 'chanxistation': '12-1计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站外', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-1计'}, {'wellname': 'AD12CH', 'compname': '管理三区', 'exportstation': '倒油', 'chanxistation': '单井', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站外', 'hourchanxi': None, 'setcheck': None, 'devicestatus': '未开井', 'station': '单井'}, {'wellname': 'AD13CH', 'compname': '管理三区', 'exportstation': '12-12计', 'chanxistation': '12-12计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': None, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站内', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-12计'}, {'wellname': 'AD14', 'compname': '管理三区', 'exportstation': '12-10计', 'chanxistation': '12-10计（港西）', 'area': '塔河十二区', 'prostatus': '注水焖井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 3446.844, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站外', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-10'}, {'wellname': 'AD15', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站内', 'hourchanxi': None, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-11计'}, {'wellname': 'AD16', 'compname': '管理三区', 'exportstation': '12-7计', 'chanxistation': '12-7计（港西）', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 0.0, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站外', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-7计'}, {'wellname': 'AD17', 'compname': '管理三区', 'exportstation': '12-11计', 'chanxistation': '12-11计', 'area': '塔河十二区', 'prostatus': '关井', 'ischanxi': '掺稀', 'avrhourchanxi': None, 'basedata': None, 'sumchanxi': None, 'diffhourchanxi': None, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '站内', 'hourchanxi': None, 'setcheck': None, 'devicestatus': '未开井', 'station': '12-11计'}  ... displaying 10 of 938 total bound parameter sets ...  {'wellname': 'TH12365X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 338.2864, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '未知', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': ''}, {'wellname': 'TH12374X', 'compname': None, 'exportstation': None, 'chanxistation': None, 'area': None, 'prostatus': None, 'ischanxi': None, 'avrhourchanxi': 0.0, 'basedata': 0.0, 'sumchanxi': 518.181, 'diffhourchanxi': 0.0, 'time': '2021-06-20 00:00:00', 'stacheck': None, 'devicelocation': '未知', 'hourchanxi': 0.0, 'setcheck': None, 'devicestatus': '未开井', 'station': ''})]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+

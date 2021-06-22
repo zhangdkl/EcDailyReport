@@ -49,7 +49,7 @@ pip install cx_Oracle
 pip install sqlalchemy
 pip install apscheduler
 
-
+pip install requests
 
 
 

@@ -18,11 +18,10 @@ import calendar
 # import matplotlib.pyplot as plt
 
 pd.set_option('display.max_columns', 50)
-pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_rows', 1000)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 # pd.set_option('display.max_colwidth', 5000)
 pd.set_option('display.width', 1000)
-
 
 
 # # 全局变量
@@ -58,6 +57,7 @@ def setlog():
 # 数据库连接初始化
 def initdatacon():
     global GlOBAL_oracle_engine_ecpro
+    global GlOBAL_oracle_engine_ecpro_pradayly
     global GlOBAL_oracle_engine_bupro
     global GlOBAL_mssql_engine_GBK
     global GlOBAL_mssql_engine_UTF8
@@ -70,14 +70,20 @@ def initdatacon():
                            "database": 'cyec',
                            "charset": 'utf8',
                            "servertype": 'sqlserver'}
-    # 采油厂生产数据实时关系库
+    # 采油厂生产数据关系库（PCS）
     dsn_tns = cx_Oracle.makedsn('10.16.192.49', 1521, 'ORCL')
     sensor_oracle_data_servre = {"user": 'sssjzc',
                                  "password": 'sssjzc',
                                  "dsn_tns": dsn_tns,
                                  "servertype": 'oracle'}
+    # 采油厂生产数据关系库（PCS内日度数据表）
+    dsn_tns1 = cx_Oracle.makedsn('10.16.192.49', 1521, 'ORCL')
+    sensor_oracle_data_servre1 = {"user": 'pcsxt20',
+                                  "password": 'pcsxt_20',
+                                  "dsn_tns": dsn_tns1,
+                                  "servertype": 'oracle'}
     # 分公司生产数据池发布数据库
-    dsn_tns1 = cx_Oracle.makedsn('10.16.3.34', 1521, service_name='kfdb')
+    dsn_tns1 = cx_Oracle.makedsn('10.16.17.81', 1521, service_name='kfdb')
     daily_oracle_data_servre = {"user": 'yjywj',
                                 "password": 'WJadmin#$2021002',
                                 "dsn_tns": dsn_tns1,
@@ -86,6 +92,9 @@ def initdatacon():
     # 采油厂实时生产数据库连接
     GlOBAL_oracle_engine_ecpro = create_engine('oracle+cx_oracle://%s:%s@%s' % (
         sensor_oracle_data_servre["user"], sensor_oracle_data_servre["password"], sensor_oracle_data_servre["dsn_tns"]))
+    # 采油厂实时生产数据库连接(油井日度数据)
+    GlOBAL_oracle_engine_ecpro_pradayly = create_engine('oracle+cx_oracle://%s:%s@%s' % (
+        sensor_oracle_data_servre1["user"], sensor_oracle_data_servre1["password"], sensor_oracle_data_servre1["dsn_tns"]))
     # 分公司实时生产数据库连接
     GlOBAL_oracle_engine_bupro = create_engine('oracle+cx_oracle://%s:%s@%s' % (
         daily_oracle_data_servre["user"], daily_oracle_data_servre["password"], daily_oracle_data_servre["dsn_tns"]))
@@ -390,15 +399,19 @@ def extract_erchang_well_hour_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井小时监测数据!")
 
-    extracthours = 6
+    extracthours = 5
     try:
         for exhour in range(1, extracthours):
-            # if True:
-            #     exday = 4216
+            # 单井功图数据
             ExtractEcWellAutoIndicatorDataHour(exhour)
+            # 单井掺稀数据
             ExtractEcWellChanxiDataHour(exhour)
+            # 计转站外输数据
             ExtractEcStationExTransmissionDataHour(exhour)
+            # 计转站掺稀数据
             ExtractEcStationChanxiInputDataHour(exhour)
+            # 单井工况参数
+            ExtractEcWellParameterDataHour(exhour)
             print("%s 二厂单井小时监测转储完毕！" % getbegintime((exhour - 1) * 60, "minutes"))
     except Exception as e:
         GLOBAL_Logger.info(traceback.format_exc())
@@ -428,11 +441,10 @@ def ExtractEcWellAutoIndicatorDataHour(exhour):
     shicedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     shicedata.columns = ShishiFieldName
     shicedata = shicedata[shicedata["stroke"] > 0]
+
     shicedata.drop_duplicates(subset=["wellname"], keep='last', inplace=True)
     shicedata = shicedata.set_index(["wellname"])
     shicedata.dropna(how="any", inplace=True)
-
-    # print(shicedata)
 
     # 去除为零异常功图，计算最大载荷
     datalen = len(shicedata)
@@ -463,8 +475,6 @@ def ExtractEcWellAutoIndicatorDataHour(exhour):
         shicedata = shicedata[shicedata["iswork"]]
         shicedata = shicedata.drop(columns=['iswork'])
 
-        # print(shicedata)
-
         # 删除已有数据
         tablename = "EcWellIndicatorAutoHour"
         del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "date", endtime)
@@ -476,6 +486,70 @@ def ExtractEcWellAutoIndicatorDataHour(exhour):
 
 # 转储二厂单井掺稀小时数据
 def ExtractEcWellChanxiDataHour(exhour):
+    # 流量计位置检查
+    def checklocation(x):
+        if pd.isnull(x):
+            status = "未知"
+        else:
+            if ("港西" in x) or ("单井" in x):
+                status = "站外"
+            elif ("不掺稀" in x) or ("否" in x):
+                status = "不掺稀"
+            else:
+                status = "站内"
+        return status
+
+    # 计转站归属整理
+    def sortstation(x):
+        if pd.isnull(x):
+            status = "未知"
+        else:
+            if x.find("计") > 0:
+                status = x[:x.find("计") + 1]
+            elif x.find("罐") > 0:
+                status = x[:x.find("罐") + 2]
+            else:
+                status = x
+        return status
+
+    # 流量计状态检查
+    def checkstatus(x):
+        prostatus = x["prostatus"]
+        rio = x["stacheck"]
+        baserio = x["setcheck"]
+        if prostatus != "不掺稀":
+            if prostatus == "开井":
+                if pd.isnull(rio):
+                    status = "无数据"
+                elif rio < 10:
+                    if baserio < 30:
+                        status = "正常"
+                    else:
+                        status = "设定异常"
+                else:
+                    if baserio < 30:
+                        status = "底数异常"
+                    else:
+                        status = "底数及设定异常"
+            else:
+                status = "未开井"
+        else:
+            status = "不掺稀"
+
+        return status
+
+    def gethourdata(x):
+        avr = x["avrhourchanxi"]
+        diff = x["diffhourchanxi"]
+        rio = x["stacheck"]
+
+        if rio < 10:
+            hourdata = diff
+        else:
+            hourdata = avr
+
+        return hourdata
+
     exbegintime = getbegintime((exhour + 1) * 60, "minutes")
     begintime = getbegintime(exhour * 60, "minutes")
     endtime = getbegintime((exhour - 1) * 60, "minutes")
@@ -495,13 +569,13 @@ def ExtractEcWellChanxiDataHour(exhour):
                    (str_fieds, tablename, begintime, endtime)
     realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     realtimedata.columns = FieldName
-    realtimedata.sort_values("time")
+    realtimedata = realtimedata.sort_values("time")
 
     get_data_sql = "SELECT %s FROM %s WHERE cjsj>TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') AND cjsj <= TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss')" % \
                    (str_fieds, tablename, exbegintime, begintime)
     exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     exrealtimedata.columns = FieldName
-    exrealtimedata.sort_values("time")
+    exrealtimedata = exrealtimedata.sort_values("time")
 
     # 统计掺稀设定值、掺稀底数
     sumrealtimedata = realtimedata.drop_duplicates(subset=["wellname"], keep='last')
@@ -521,8 +595,6 @@ def ExtractEcWellChanxiDataHour(exhour):
     realtimedata = realtimedata.drop(columns=['basedata', 'sumchanxi'])
     realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
 
-    realtimedata["time"] = endtime
-
     # 归属关系统计
     tablename = "EcWellStaticData"
     fields = ["JH", "DWMC", "DYFS", "CXFS", "CYQ", "SCZT", "ISCX"]
@@ -539,7 +611,25 @@ def ExtractEcWellChanxiDataHour(exhour):
     staticdata.columns = FieldName
     staticdata = staticdata.set_index("wellname")
 
-    realtimedata = pd.concat([staticdata, realtimedata], axis=1, join='inner')
+    realtimedata = pd.concat([staticdata, realtimedata], axis=1, join='outer')
+
+    realtimedata["check"] = realtimedata.index
+    realtimedata = realtimedata[~realtimedata["check"].str.contains("-JRL")]
+    realtimedata.drop(columns=["check"], inplace=True)
+    realtimedata.dropna(how="all", inplace=True)
+    realtimedata["time"] = endtime
+
+    realtimedata.rename(columns={'hourchanxi': 'avrhourchanxi'}, inplace=True)
+
+    realtimedata["stacheck"] = abs((realtimedata["avrhourchanxi"] - realtimedata["diffhourchanxi"]) / realtimedata["avrhourchanxi"] * 100)
+    realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
+    realtimedata["devicelocation"] = realtimedata["chanxistation"].map(checklocation)
+    realtimedata["hourchanxi"] = realtimedata.apply(gethourdata, axis=1)
+    realtimedata["setcheck"] = abs((realtimedata["basedata"] - realtimedata["hourchanxi"]) / realtimedata["hourchanxi"] * 100)
+    realtimedata["devicestatus"] = realtimedata.apply(checkstatus, axis=1)
+    realtimedata["station"] = realtimedata["chanxistation"].map(sortstation)
+
+    realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
 
     # 删除已有数据
     tablename = "EcWellChanxiRealtimeAutoHour"
@@ -560,8 +650,19 @@ def ExtractEcStationExTransmissionDataHour(exhour):
             status = "正常"
         else:
             status = "底数异常"
-
         return status
+
+    def gethourdata(x):
+        avr = x["evrhourdata"]
+        diff = x["diffhourdata"]
+        rio = x["stacheck"]
+
+        if rio < 10:
+            hourdata = diff
+        else:
+            hourdata = avr
+
+        return hourdata
 
     exbegintime = getbegintime((exhour + 1) * 60, "minutes")
     begintime = getbegintime(exhour * 60, "minutes")
@@ -571,7 +672,7 @@ def ExtractEcStationExTransmissionDataHour(exhour):
 
     # 当前小时数据
     fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
-    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    FieldName = ["time", "divcode", "hourdata", "sumdata", "pressure", "temperature"]
     str_fieds = ""
     for field in fields:
         if str_fieds == "":
@@ -583,8 +684,8 @@ def ExtractEcStationExTransmissionDataHour(exhour):
                    "instr(sbbm, '%s')>0" % (str_fieds, tablename, begintime, endtime, "_YYWSHG")
     realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     realtimedata.columns = FieldName
-    realtimedata.sort_values("time")
-    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+    realtimedata = realtimedata.sort_values("time")
+    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_") - 3] + "计")
 
     # 当前小时累计数据
     sumrealtimedata = realtimedata.drop_duplicates(subset=["divcode"], keep='last')
@@ -592,7 +693,7 @@ def ExtractEcStationExTransmissionDataHour(exhour):
 
     # 上一小时数据
     fields = ["CJSJ", "SBBM", "SSLL", "LJLL", "YL", "WD"]
-    FieldName = ["time", "divcode", "hourchanxi", "sumchanxi", "pressure", "temperature"]
+    FieldName = ["time", "divcode", "hourdata", "sumdata", "pressure", "temperature"]
     str_fieds = ""
     for field in fields:
         if str_fieds == "":
@@ -604,29 +705,33 @@ def ExtractEcStationExTransmissionDataHour(exhour):
                    "instr(sbbm, '%s')>0" % (str_fieds, tablename, exbegintime, begintime, "_YYWSHG")
     exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     exrealtimedata.columns = FieldName
-    exrealtimedata.sort_values("time")
+    exrealtimedata = exrealtimedata.sort_values("time")
     # exrealtimedata["station"] = exrealtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
     # 上小时累计数据
     exsumrealtimedata = exrealtimedata.drop_duplicates(subset=["divcode"], keep='last')
     exsumrealtimedata.set_index(['divcode'], inplace=True)
-    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'hourchanxi', 'pressure', 'temperature'])
-    exsumrealtimedata.rename(columns={'sumchanxi': 'exsumchanxi'}, inplace=True)
+    exsumrealtimedata = exsumrealtimedata.drop(columns=['time', 'hourdata', 'pressure', 'temperature'])
+    exsumrealtimedata.rename(columns={'sumdata': 'exsumdata'}, inplace=True)
 
     # 计算外输底数差值
     sumrealtimedata = pd.concat([sumrealtimedata, exsumrealtimedata], axis=1, join='inner')
-    sumrealtimedata["diffhourchanxi"] = sumrealtimedata["sumchanxi"] - sumrealtimedata["exsumchanxi"]
-    sumrealtimedata = sumrealtimedata.drop(columns=['time', 'hourchanxi', 'temperature', 'pressure', 'exsumchanxi'])
+    sumrealtimedata["diffhourdata"] = sumrealtimedata["sumdata"] - sumrealtimedata["exsumdata"]
+    sumrealtimedata = sumrealtimedata.drop(columns=['time', 'hourdata', 'temperature', 'pressure', 'exsumdata'])
 
     # 计算小时数据
     realtimedata = realtimedata.groupby("divcode").mean()
-    realtimedata = realtimedata.drop(columns=['sumchanxi'])
+    realtimedata.rename(columns={'hourdata': 'evrhourdata'}, inplace=True)
+    realtimedata = realtimedata.drop(columns=['sumdata'])
     realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
     realtimedata.set_index(['station'], inplace=True)
     realtimedata["time"] = endtime
     realtimedata["devicetype"] = "原油外输"
-    realtimedata["stacheck"] = abs((realtimedata["hourchanxi"] - realtimedata["diffhourchanxi"])/realtimedata["hourchanxi"]*100)
+    realtimedata["stacheck"] = abs((realtimedata["evrhourdata"] - realtimedata["diffhourdata"]) / realtimedata["evrhourdata"] * 100)
     realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
     realtimedata["devicestatus"] = realtimedata["stacheck"].map(checkstatus)
+    realtimedata["hourdata"] = realtimedata.apply(gethourdata, axis=1)
+
+    # print(realtimedata)
 
     # 删除已有数据
     tablename = "EcStationExtransmissionAutoHour"
@@ -647,8 +752,19 @@ def ExtractEcStationChanxiInputDataHour(exhour):
             status = "正常"
         else:
             status = "底数异常"
-
         return status
+
+    def gethourdata(x):
+        avr = x["avrhourchanxi"]
+        diff = x["diffhourchanxi"]
+        rio = x["stacheck"]
+
+        if rio < 10:
+            hourdata = diff
+        else:
+            hourdata = avr
+
+        return hourdata
 
     exbegintime = getbegintime((exhour + 1) * 60, "minutes")
     begintime = getbegintime(exhour * 60, "minutes")
@@ -670,8 +786,8 @@ def ExtractEcStationChanxiInputDataHour(exhour):
                    "instr(sbbm, '%s')>0" % (str_fieds, tablename, begintime, endtime, "_LXYGX")
     realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     realtimedata.columns = FieldName
-    realtimedata.sort_values("time")
-    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
+    realtimedata = realtimedata.sort_values("time")
+    realtimedata["station"] = realtimedata["divcode"].map(lambda x: x[:x.find("_") - 3] + "计")
 
     # 当前小时累计数据
     sumrealtimedata = realtimedata.drop_duplicates(subset=["divcode"], keep='last')
@@ -692,7 +808,7 @@ def ExtractEcStationChanxiInputDataHour(exhour):
                    "instr(sbbm, '%s')>0" % (str_fieds, tablename, exbegintime, begintime, "_LXYGX")
     exrealtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
     exrealtimedata.columns = FieldName
-    exrealtimedata.sort_values("time")
+    exrealtimedata = exrealtimedata.sort_values("time")
     # exrealtimedata["station"] = exrealtimedata["divcode"].map(lambda x: x[:x.find("_")-3] + "计")
     # 上小时累计数据
     exsumrealtimedata = exrealtimedata.drop_duplicates(subset=["divcode"], keep='last')
@@ -707,19 +823,96 @@ def ExtractEcStationChanxiInputDataHour(exhour):
 
     # 计算小时数据
     realtimedata = realtimedata.groupby("divcode").mean()
+    realtimedata.rename(columns={'hourchanxi': 'avrhourchanxi'}, inplace=True)
     realtimedata = realtimedata.drop(columns=['sumchanxi'])
     realtimedata = pd.concat([realtimedata, sumrealtimedata], axis=1, join='inner')
     realtimedata.set_index(['station'], inplace=True)
     realtimedata["time"] = endtime
     realtimedata["devicetype"] = "掺稀来油"
-    realtimedata["stacheck"] = abs((realtimedata["hourchanxi"] - realtimedata["diffhourchanxi"])/realtimedata["hourchanxi"]*100)
+    realtimedata["stacheck"] = abs((realtimedata["avrhourchanxi"] - realtimedata["diffhourchanxi"]) / realtimedata["avrhourchanxi"] * 100)
     realtimedata.replace([np.inf, -np.inf], np.nan, inplace=True)
     realtimedata["devicestatus"] = realtimedata["stacheck"].map(checkstatus)
-
-    # print(realtimedata)
+    realtimedata["hourchanxi"] = realtimedata.apply(gethourdata, axis=1)
 
     # 删除已有数据
     tablename = "EcStationChanxiInputAutoHour"
+    del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "time", endtime)
+    executesql(SqlserverDataServre, del_data_sql)
+
+    # # 写入测试数据
+    realtimedata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+
+
+# 转储二厂单井参数小时数据
+def ExtractEcWellParameterDataHour(exhour):
+    begintime = getbegintime(exhour * 60, "minutes")
+    endtime = getbegintime((exhour - 1) * 60, "minutes")
+    enddate = getstartdate((exhour - 1) / 24)
+
+    # 掺稀数据统计
+    tablename = "ssc_yj_ss"
+    fields = ["JH", "CJSJ", "JK_YY", "JK_TY", "JK_HY", "JK_WD", "DY_A", "DY_B", "DY_C", "DL_A", "DL_B", "DL_C", "AXSXDLFZ", "BXSXDLFZ", "CXSXDLFZ",
+              "AXXXDLFZ", "BXXXDLFZ", "CXXXDLFZ", "JRL_SYWD", "JRL_YW"]
+    FieldName = ["wellname", "RQ", "YY", "TY", "HY", "JW", "DY_A", "DY_B", "DY_C", "DL_A", "DL_B", "DL_C", "AXSXDLFZ", "BXSXDLFZ", "CXSXDLFZ",
+                 "AXXXDLFZ", "BXXXDLFZ", "CXXXDLFZ", "LW", "CW"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE cjsj>TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') AND cjsj <= TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss')" % \
+                   (str_fieds, tablename, begintime, endtime)
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro)
+    realtimedata.columns = FieldName
+    realtimedata = realtimedata.sort_values("RQ")
+
+    realtimedata = realtimedata.groupby("wellname").mean()
+    realtimedata["DY"] = (realtimedata["DY_A"] + realtimedata["DY_B"] + realtimedata["DY_C"]) / 3
+    realtimedata["DL"] = (realtimedata["DL_A"] + realtimedata["DL_B"] + realtimedata["DL_C"]) / 3
+    realtimedata["SXDL"] = (realtimedata["AXSXDLFZ"] + realtimedata["BXSXDLFZ"] + realtimedata["CXSXDLFZ"]) / 3
+    realtimedata["XXDL"] = (realtimedata["AXXXDLFZ"] + realtimedata["BXXXDLFZ"] + realtimedata["CXXXDLFZ"]) / 3
+    realtimedata = realtimedata.drop(columns=['DY_A', 'DY_B', 'DY_C', 'DL_A', 'DL_B', 'DL_C', 'AXSXDLFZ', 'BXSXDLFZ', 'CXSXDLFZ', 'AXXXDLFZ',
+                                              'BXXXDLFZ', 'CXXXDLFZ'])
+
+    # 归属关系统计
+    fields = ["JH", "DWMC", "DYFS", "CXFS", "CYQ", "SCZT", "ISCX", "SCFS", "JB"]
+    FieldName = ["wellname", "compname", "exportstation", "chanxistation", "area", "prostatus", "ischanxi", "protype", "welltype"]
+
+    tablename = "EcWellStaticDataHistory"
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s WHERE RQ = '%s'" % (str_fieds, tablename, enddate)
+    staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+
+    if len(staticdata) == 0:
+        tablename = "EcWellStaticData"
+        str_fieds = ""
+        for field in fields:
+            if str_fieds == "":
+                str_fieds = field
+            else:
+                str_fieds = str_fieds + ", " + field
+
+        get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+
+    staticdata.columns = FieldName
+    staticdata = staticdata.set_index("wellname")
+
+    realtimedata = pd.concat([staticdata, realtimedata], axis=1, join='outer')
+    realtimedata = realtimedata.round(2)
+    realtimedata["time"] = endtime
+    realtimedata["date"] = enddate
+
+    # 删除已有数据
+    tablename = "EcWellParameterRealtimeAutoHour"
     del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "time", endtime)
     executesql(SqlserverDataServre, del_data_sql)
 
@@ -732,14 +925,30 @@ def extract_erchang_well_daily_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井日度监测数据!")
 
-    extracdays = 6
+    extracdays = 5
     try:
-        for exday in range(1, extracdays):
-            # if True:
-            #     exday = 4216
+        for exday in range(0, extracdays):
+            # 单井功图数据
             ExtractEcWellAutoIndicatorDataDay(exday)
-            ExtractEcWellChanxiDataDay(exday)
+            # 单井工况参数
+            ExtractEcWellParameterDataDay(exday)
             print("%s 二厂单井日度监测转储完毕！" % getbegintime(exday, "days"))
+    except Exception as e:
+        GLOBAL_Logger.info(traceback.format_exc())
+        print(traceback.format_exc())
+
+
+# 转储二厂单井日度监测数据
+def extract_erchang_well_daily_monitor_chanxi_data():
+    print("......................................................")
+    print(getnowtime(), "开始转储二厂单井日度掺稀监测数据!")
+
+    extracdays = 5
+    try:
+        for exday in range(0, extracdays):
+            # 单井掺稀数据
+            ExtractEcWellChanxiDataDay(exday)
+            print("%s 二厂单井日度掺稀监测转储完毕！" % getbegintime(exday, "days"))
     except Exception as e:
         GLOBAL_Logger.info(traceback.format_exc())
         print(traceback.format_exc())
@@ -747,11 +956,11 @@ def extract_erchang_well_daily_monitor_data():
 
 # 转储二厂单井自动功图数据
 def ExtractEcWellAutoIndicatorDataDay(exday):
-    begintime = getbegintime(exday, "days")
-    endtime = getbegintime(exday - 1, "days")
-    uptime = getstartdate(exday - 1)
-    # print(begintime, endtime)
-    #
+    begintime = getbegintime(exday + 1, "days")
+    endtime = getbegintime(exday, "days")
+    uptime = getstartdate(exday)
+    # print(1, uptime)
+
     # 自动功图数据
     StrFieds = ""
     tablename = "EcWellIndicatorAutoHour"
@@ -763,13 +972,12 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
         else:
             StrFieds = StrFieds + ", " + field
     get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' and %s <= '%s'" % (StrFieds, tablename, "date", begintime, "date", endtime)
-    shicedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_UTF8)
+    shicedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
     # shicedata.columns = ShishiFieldName
     if len(shicedata) > 0:
         shicedata = shicedata.groupby("wellname").mean()
         shicedata = shicedata.round(1)
         shicedata["date"] = uptime
-        # print(shicedata)
 
         # 删除已有数据
         tablename = "EcWellIndicatorAutoDaily"
@@ -782,9 +990,9 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
 
 # 转储二厂单井掺稀日度数据
 def ExtractEcWellChanxiDataDay(exday):
-    begintime = getbegintime(exday, "days")
-    endtime = getbegintime(exday - 1, "days")
-    uptime = getstartdate(exday - 1)
+    begintime = getbegintime(exday - 1, "days")
+    endtime = getbegintime(exday, "days")
+    uptime = getstartdate(exday)
     # print(begintime, endtime)
 
     # 小时掺稀数据
@@ -802,7 +1010,7 @@ def ExtractEcWellChanxiDataDay(exday):
     get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' and %s <= '%s'" % (StrFieds, tablename, "time", begintime, "time", endtime)
     dailydata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
     dailydata.columns = FieldName
-    dailydata.sort_values("date")
+    dailydata = dailydata.sort_values("date")
 
     # 统计掺稀设定值、掺稀底数
     sumdailydata = dailydata.drop_duplicates(subset=["wellname"], keep='last')
@@ -824,6 +1032,186 @@ def ExtractEcWellChanxiDataDay(exday):
     sumdailydata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
 
 
+# 转储二厂单井工况参数日度数据
+def ExtractEcWellParameterDataDay(exday):
+    uptime = getstartdate(exday)
+
+    # print(2, uptime)
+
+    def replacedata(x, be_row, to_row):
+        bedata = x[be_row]
+        todata = x[to_row]
+        if pd.isnull(bedata):
+            return todata
+        else:
+            return bedata
+        pass
+
+    def comparedata(x, maxrow, minrow):
+        maxdata = x[maxrow]
+        mindata = x[minrow]
+        if pd.isnull(maxdata):
+            return mindata
+        elif maxdata >= mindata:
+            return mindata
+        elif mindata - maxdata > 1:
+            return mindata
+        else:
+            return maxdata - 0.01
+        pass
+
+    # （1）提取PCS日度数据
+    tablename = "SCZH.SSC_YJ_RD"
+    fields = ["JH", "YY", "JKWD", "CC", "CC1", "DY", "DL", "SXDL", "XXDL"]
+    FieldName = ["wellname", "YY", "JW", "CC", "CC1", "DY", "DL", "SXDL", "XXDL"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE RQ=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % (str_fieds, tablename, uptime)
+    pcsdata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro_pradayly)
+    pcsdata.columns = FieldName
+    pcsdata.set_index(['wellname'], inplace=True)
+
+    # 检查PCS数据，若不存在，连续取数据！
+    checklen = len(pcsdata)
+    checktimes = 12
+    checktime = 0
+    if checklen == 0:
+        waitetime = 5 * 60
+        time.sleep(waitetime)
+        for checktime in range(checktimes):
+            pcsdata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro_pradayly)
+            checklen = len(pcsdata)
+            print("重新提取数据%s次" % (checktime + 1))
+            if checklen > 0:
+                break
+            time.sleep(waitetime)
+    # print(pcsdata)
+
+    # （2）提取远传小时数据
+    begintime = getbegintime(exday + 1, "days")
+    endtime = getbegintime(exday, "days")
+
+    # 小时掺稀数据
+    StrFieds = ""
+    tablename = "EcWellParameterRealtimeAutoHour"
+    GetField = ["wellname", "time", "yy", "ty", "hy", "jw", "dy", "dl", "sxdl", "xxdl", "lw", "cw"]
+    for field in GetField:
+        if StrFieds == "":
+            StrFieds = field
+        else:
+            StrFieds = StrFieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' and %s < '%s'" % (StrFieds, tablename, "time", begintime, "time", endtime)
+    dailydata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    dailydata = dailydata.sort_values("time")
+    gbydailydata = dailydata.groupby("wellname")
+
+    dailydatamean = gbydailydata.mean()
+    dailydatamean = dailydatamean.drop(columns=["yy", "ty", "hy", "jw"])
+    dailydatamean.columns = ["dymean", "dlmean", "sxdlmean", "xxdlmean", "lwmean", "cwmean"]
+
+    dailydatamax = gbydailydata.max()
+    dailydatamax = dailydatamax.drop(columns=["dy", "dl", "sxdl", "xxdl", "lw", "cw", "time"])
+    dailydatamax.columns = ["yymax", "tymax", "hymax", "jwmax"]
+
+    dailydatamin = gbydailydata.min()
+    dailydatamin = dailydatamin.drop(columns=["dy", "dl", "sxdl", "xxdl", "lw", "cw", "time"])
+    dailydatamin.columns = ["yymin", "tymin", "hymin", "jwmin"]
+    #
+    # print(dailydatamean)
+    # print(dailydatamax)
+    # print(dailydatamin)
+
+    # （3）提取功图载荷数据
+    StrFieds = ""
+    tablename = "EcWellIndicatorAutoDaily"
+    GetField = ["wellname", "stroke", "speed", "maxload"]
+    for field in GetField:
+        if StrFieds == "":
+            StrFieds = field
+        else:
+            StrFieds = StrFieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "date", uptime)
+    indicatedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    indicatedata.set_index(["wellname"], inplace=True)
+    # print(indicatedata)
+
+    # （4）归属关系统计
+    # 归属关系统计
+    fields = ["JH", "DWMC", "DYFS", "CXFS", "CYQ", "SCZT", "ISCX", "SCFS", "JB"]
+    FieldName = ["wellname", "compname", "exportstation", "chanxistation", "area", "prostatus", "ischanxi", "protype", "welltype"]
+
+    tablename = "EcWellStaticData"
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+
+    get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+    staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    staticdata.columns = FieldName
+    staticdata = staticdata.set_index("wellname")
+
+    # print(staticdata)
+
+    # (4)数据整合
+    returndata = pd.concat([dailydatamean, dailydatamax, dailydatamin], axis=1, join='outer')
+    if len(indicatedata) > 0:
+        returndata = pd.concat([returndata, indicatedata], axis=1, join='outer')
+    returndata = pd.concat([staticdata, returndata], axis=1, join='outer')
+    # print(returndata)
+
+    # 若持续提取不到数据，放弃
+    if checktime < checktimes - 1:
+        returndata = pd.concat([returndata, pcsdata], axis=1, join='outer')
+        returndata["yymax"] = returndata.apply(replacedata, axis=1, args=('YY', 'yymax'))
+        returndata["jwmax"] = returndata.apply(replacedata, axis=1, args=('JW', 'jwmax'))
+        returndata["stroke"] = returndata.apply(replacedata, axis=1, args=('CC', 'stroke'))
+        returndata["speed"] = returndata.apply(replacedata, axis=1, args=('CC1', 'speed'))
+        returndata["dymean"] = returndata.apply(replacedata, axis=1, args=('DY', 'dymean'))
+        returndata["dlmean"] = returndata.apply(replacedata, axis=1, args=('DL', 'dlmean'))
+        returndata["sxdlmean"] = returndata.apply(replacedata, axis=1, args=('SXDL', 'sxdlmean'))
+        returndata["xxdlmean"] = returndata.apply(replacedata, axis=1, args=('XXDL', 'xxdlmean'))
+        returndata = returndata.drop(columns=["YY", "JW", "CC", "CC1", "DY", "DL", "SXDL", "XXDL"])
+        # returndata.columns = ["dy", "dl", "sxdl", "xxdl", "lw", "cw", "yymax", "tymax", "hymax", "jwmax", "yymin", "tymin", "hymin", "jwmin",
+        #                       "stroke", "speed", "maxload", "date"]
+
+    returndata["hymax"] = returndata.apply(comparedata, axis=1, args=('yymax', 'hymax'))
+    returndata["yymin"] = returndata.apply(comparedata, axis=1, args=('yymax', 'yymin'))
+    returndata["tymin"] = returndata.apply(comparedata, axis=1, args=('tymax', 'tymin'))
+    returndata["hymin"] = returndata.apply(comparedata, axis=1, args=('hymax', 'hymin'))
+    returndata["jwmin"] = returndata.apply(comparedata, axis=1, args=('jwmax', 'jwmin'))
+    returndata.dropna(how="all", inplace=True)
+
+    returndata["check"] = returndata.index
+    returndata = returndata[~returndata["check"].str.contains("-JRL")]
+    returndata.drop(columns=["check"], inplace=True)
+
+    returndata = returndata.round(2)
+    returndata["stroke"] = returndata["stroke"].round(1)
+    returndata["speed"] = returndata["speed"].round(1)
+    returndata["dymean"] = returndata["dymean"].round(0)
+    returndata["sxdlmean"] = returndata["sxdlmean"].round(1)
+    returndata["xxdlmean"] = returndata["xxdlmean"].round(1)
+    returndata["jwmax"] = returndata["jwmax"].round(1)
+    returndata["tymax"] = returndata["tymax"].round(1)
+    returndata["date"] = uptime
+    # print(returndata)
+
+    # 删除已有数据
+    tablename = "EcWellParameterRealtimeAutoDaily"
+    del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "date", uptime)
+    executesql(SqlserverDataServre, del_data_sql)
+
+    # 写入测试数据
+    returndata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+
+
 # 转储二厂油井归属数据
 def extract_erchang_well_relegation_data():
     global GLOBAL_Logger
@@ -842,6 +1230,9 @@ def extract_erchang_well_relegation_data():
 
 # 转储二厂油井归属数据
 def ExtractErchangWellRelegationData():
+    # 更新本日静态数据
+    datenow = getstartdate(0)
+
     StrFieds = ""
     tablename = "ecsjb"
     GetField = ["RQ", "JH", "DWMC", "CYQ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]
@@ -851,17 +1242,39 @@ def ExtractErchangWellRelegationData():
             StrFieds = field
         else:
             StrFieds = StrFieds + ", " + field
-    get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s'" % (StrFieds, tablename, "RQ", getstartdate(10))
+    get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "RQ", datenow)
     staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
     staticdata.columns = FieldName
-    # staticdata = pd.DataFrame(staticdata, columns=FieldName)
+    staticdata = staticdata.set_index(["JH"])
+
+    # 删除已有数据
+    tablename = "EcWellStaticDataHistory"
+    del_data_sql = "DELETE FROM %s WHERE RQ = '%s'" % (tablename, datenow)
+    executesql(SqlserverDataServre, del_data_sql)
+
+    # 更新数据
+    staticdata.to_sql(tablename, GlOBAL_mssql_engine_UTF8, if_exists='append')
+
+    # 更新今日静态数据
+    datebefore = getstartdate(10)
+
+    StrFieds = ""
+    tablename = "ecsjb"
+    GetField = ["RQ", "JH", "DWMC", "CYQ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]
+    FieldName = ["RQ", "JH", "DWMC", "CYQ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]
+    for field in GetField:
+        if StrFieds == "":
+            StrFieds = field
+        else:
+            StrFieds = StrFieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s'" % (StrFieds, tablename, "RQ", datebefore)
+    staticdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    staticdata.columns = FieldName
     staticdata.sort_values(by="RQ", inplace=True)
     staticdata.drop_duplicates(subset=["JH", "DWMC", "CYQ", "DYFS", "CXFS", "ZYLX"], keep='last', inplace=True)
     staticdata.fillna(method="ffill", inplace=True)
     staticdata.drop_duplicates(subset=["JH"], keep='last', inplace=True)
-    # staticdata["JH"] = staticdata["JH"].str.encode('latin1').str.decode('gbk')
     staticdata = staticdata.set_index(["JH"])
-    # print(staticdata)
 
     # 删除已有数据
     tablename = "EcWellStaticData"
@@ -902,10 +1315,12 @@ def ExtractErchangWellDynicurveData(exday):
     tablename = "ecsjb"
     GetField = ["RQ", "JH", "DWMC", "CYQ", "SCSJ", "YZ", "PL1", "BJ", "BJ1", "BS", "PL", "CC", "CC1", "YY",
                 "TY", "HY", "JKWD", "HHYL", "RCYL1", "RCYL", "RCSL", "RCXL", "HHHS", "HS", "DY", "DL",
-                "SXDL", "XXDL", "RZSL", "RZQL", "RBSL", "BZ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]
+                "SXDL", "XXDL", "RZSL", "RZQL", "RBSL", "BZ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX",
+                "SCC", "SCC1", "KXY", "RJNL", "Maxload", "CQL"]
     FieldName = ["RQ", "JH", "DWMC", "CYQ", "SCSJ", "YZ", "PL1", "BJ", "BJ1", "BS", "PL", "CC", "CC1", "YY",
                  "TY", "HY", "JKWD", "HHYL", "RCYL1", "RCYL", "RCSL", "RCXL", "HHHS", "HS", "DY", "DL",
-                 "SXDL", "XXDL", "RZSL", "RZQL", "RBSL", "BZ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]
+                 "SXDL", "XXDL", "RZSL", "RZQL", "RBSL", "BZ", "DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX",
+                 "SCC", "SCC1", "KXY", "RJNL", "Maxload", "CQL"]
 
     # GetField = ["RQ", "JH", "DWMC", "CYQ"]
     # FieldName = ["RQ", "JH", "DWMC", "CYQ"]
@@ -916,14 +1331,11 @@ def ExtractErchangWellDynicurveData(exday):
         else:
             StrFieds = StrFieds + ", " + field
     get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (StrFieds, tablename, "RQ", begintime)
-    # dynamicdata = getdatasql(SqlserverDataServre, get_data_sql)
     dynamicdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
-    # dynamicdata = pd.DataFrame(dynamicdata, columns=FieldName)
     dynamicdata.columns = FieldName
     dynamicdata = dynamicdata.set_index(["JH"])
     dynamicdata["XCB"] = dynamicdata["RCXL"] / dynamicdata["RCYL"]
     dynamicdata["BX"] = dynamicdata["HHYL"] / dynamicdata["PL"] * 100
-    # print(dynamicdata.loc[:, ["DYFS", "CXFS", "SCFS", "ISCX", "JB", "SCZT", "ZYLX"]])
 
     # 液面压力
     StrFieds = ""
@@ -1043,10 +1455,6 @@ def ExtractErchangWellDynicurveData(exday):
     dynamicdata.dropna(subset=["RQ"], inplace=True)
     dynamicdata.replace([np.inf, -np.inf], np.nan, inplace=True)
 
-    # print(dynamicdata)
-    #
-    # print(dynamicdata.loc[:, ["RQ", "MD"]])
-
     # 删除已有数据
     tablename = "EcWellHisData"
     del_data_sql = "DELETE FROM %s WHERE %s = '%s'" % (tablename, "RQ", begintime)
@@ -1067,10 +1475,7 @@ if __name__ == '__main__':
     # extract_erchang_well_assay_data()
     # extract_erchang_well_hour_monitor_data()
     # extract_erchang_well_daily_monitor_data()
-
-    # extract_tanker_shipment_data()
-    # extract_well_realtime_data()
-    # extract_level_date()
+    # extract_erchang_well_daily_monitor_chanxi_data()
 
     print("开始迭代更新数据")
     scheduler = BackgroundScheduler()
@@ -1083,8 +1488,10 @@ if __name__ == '__main__':
     job3 = scheduler.add_job(extract_erchang_well_assay_data, 'interval', hours=2)
     # 每小时归集远传数据，生成小时动态数据
     job4 = scheduler.add_job(extract_erchang_well_hour_monitor_data, 'cron', minute=4)
-    # 每天归集小时动态数据，生成日度动态数据，包括功图数据及站库掺稀数据
-    job5 = scheduler.add_job(extract_erchang_well_daily_monitor_data, 'cron', hour=16, minute=5)
+    # 每天归集小时动态数据，生成日度动态数据，包括功图数据及单井参数数据
+    job5 = scheduler.add_job(extract_erchang_well_daily_monitor_data, 'cron', hour=11, minute=5)
+    # 每天归集小时动态数据，生成日度动态数据，包括站库掺稀数据
+    job6 = scheduler.add_job(extract_erchang_well_daily_monitor_chanxi_data, 'cron', hour=16, minute=5)
     scheduler.start()
 
     while True:
