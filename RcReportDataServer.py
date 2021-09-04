@@ -14,6 +14,11 @@ import re
 import traceback
 from sqlalchemy import create_engine
 import calendar
+import requests
+import json
+import locale
+
+locale.setlocale(locale.LC_CTYPE, 'chinese')
 
 # import matplotlib.pyplot as plt
 
@@ -62,6 +67,15 @@ def initdatacon():
     global GlOBAL_mssql_engine_GBK
     global GlOBAL_mssql_engine_UTF8
     global SqlserverDataServre
+    global GLOBLE_gaswaterrob_url
+    global GLOBLE_headers
+    global GLOBLE_corp_id
+    global GLOBLE_corp_secret
+
+    GLOBLE_gaswaterrob_url = "https://oapi.dingtalk.com/robot/send?access_token=6f7a56d15c8f7f362a7f7d0c5896919133fe3238d0c8bca53e6532e30488c6a5"
+    GLOBLE_headers = {"Content-Type": "application/json; charset=utf-8"}
+    GLOBLE_corp_id = "ding4acb78f9e8af3f0635c2f4657eb6378f"
+    GLOBLE_corp_secret = "zUm-_VjM_s_O4zNHBqfdrf1SE9ejfQVoXviIFRK9Y02dgG-t1ZI5PGvhPsoLblEe"
 
     # 采油厂生产数据关系库
     SqlserverDataServre = {"host": '10.16.192.40',
@@ -85,7 +99,7 @@ def initdatacon():
     # 分公司生产数据池发布数据库
     dsn_tns1 = cx_Oracle.makedsn('10.16.17.81', 1521, service_name='kfdb')
     daily_oracle_data_servre = {"user": 'yjywj',
-                                "password": 'WJadmin#$2021002',
+                                "password": 'WjAdmin#$2021003',
                                 "dsn_tns": dsn_tns1,
                                 "servertype": 'oracle'}
 
@@ -1296,7 +1310,7 @@ def extract_erchang_well_dynicurve_data():
 
     extractdays = 10
     try:
-        for exday in range(1, extractdays):
+        for exday in range(0, extractdays):
             # if True:
             #     exday = 4216
             ExtractErchangWellDynicurveData(exday)
@@ -1466,6 +1480,711 @@ def ExtractErchangWellDynicurveData(exday):
     print("%s日%s口井单井曲线数据更新完毕！" % (begintime, len(dynamicdata)))
 
 
+# 提取注水注气小时数据
+def extract_gas_water_injection_realtime_data():
+    global GLOBAL_Logger
+
+    GLOBAL_Logger.info("开始更新注水注气小时远传数据！")
+    print("......................................................")
+    print("开始更新数据！", getnowtime())
+
+    extracthours = 24
+    try:
+        extimes = 0
+        for exhour in range(0, extracthours):
+        # for exhour in range(290, extracthours):
+            extractgaswaterinjectionrealtimedata(exhour)
+            print("前%s小时数据提取成功！" % str(exhour))
+            extimes = extimes + 1
+        GLOBAL_Logger.info("共%s小时实时数据提取完毕!" % str(extimes))
+        print("共%s小时实时数据提取完成!" % str(extimes))
+    except Exception as e:
+        GLOBAL_Logger.info(traceback.format_exc())
+        print(traceback.format_exc())
+
+
+def extractgaswaterinjectionrealtimedata(hour):
+    global GLOBAL_Logger
+    global GlOBAL_oracle_engine_ecpro_pradayly
+    global GlOBAL_mssql_engine_GBK
+    # global GlOBAL_mssql_engine_GBK
+
+    print('................................')
+    print(getbegintime(hour * 60, 'minutes'))
+
+    gas_min_data_info = {
+        'tablename': "PCSYWXT20.SSC_ZQSB_SS",
+        'fields': ['jh', 'cjsj', 'yhbzsyl', 'yhbssll', 'yhbljll', 'ehbzsyl', 'ehbssll', 'ehbljll', 'zqwd', 'dqcd', 'zqyl', 'zqssll', 'zqljll',
+                   'sygzl', 'ygyl', 'tgyl', 'gsmc', 'gsdm', 'txzt', 'ycsbbh', 'sjzrl', 'zqlx'],
+        'time': "cjsj",
+        'database': 'ora'
+    }
+
+    check_data_info = {
+        'tablename': "dbo.EcGasInjectHourly",
+        'fields': ['wellname', 'cotime'],
+        'time': "cotime",
+        'database': 'mssql'
+    }
+    sync_data_info = {
+        'tablename': "dbo.EcGasInjectHourly",
+        'fields': ['wellname', 'cotime', 'zsyl', 'zsssll', 'zsssll1', 'zsljll', 'zqwd', 'zqnd', 'zqyl', 'zqssll', 'zqssll1', 'zqljll', 'yy', 'ty',
+                   'dwmc', 'sjzrl', 'zqlx', 'sbbh'],
+        'time': "cotime",
+        'database': 'mssql'
+    }
+
+    # （1）提取关系库动态数据内原始数据
+
+    begin_time = getbegintime((hour + 1) * 60, 'minutes')
+    end_time = getbegintime(hour * 60, 'minutes')
+    min_gas_data = extract_ora_data(GlOBAL_oracle_engine_ecpro_pradayly, gas_min_data_info, btime=begin_time, etime=end_time)
+
+    uptime = datetime.fromtimestamp(time.time()) - relativedelta(minutes=hour * 60)
+    uptime = time.strftime("%Y-%m-%d %H:00:00", uptime.timetuple())
+    hour_gas_data = extract_gas_hour_data(min_gas_data, uptime)
+
+    begin_time = getbegintime((hour + 2) * 60, 'minutes')
+    end_time = getbegintime(hour - 2 * 60, 'minutes')
+    check_data = extract_ora_data(GlOBAL_mssql_engine_GBK, check_data_info, btime=begin_time, etime=end_time)
+
+    synchronize_gas_hour_data(hour_gas_data, check_data, SqlserverDataServre, sync_data_info)
+
+
+# 数据提取
+def extract_ora_data(engine, info, btime='', etime=''):
+    tablename = info["tablename"]
+    fields = info["fields"]
+    timefield = info["time"]
+    database_type = info["database"]
+
+    if len(fields) == 0:
+        str_fieds = "*"
+    else:
+        str_fieds = ""
+        for field in fields:
+            if str_fieds == "":
+                str_fieds = field
+            else:
+                str_fieds = str_fieds + ", " + field
+
+    if database_type == 'ora':
+        if len(btime) == 0:
+            get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        else:
+            if len(etime) == 0:
+                get_data_sql = "SELECT %s FROM %s WHERE %s>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+                               (str_fieds, tablename, timefield, btime)
+            else:
+                get_data_sql = "SELECT %s FROM %s WHERE %s >=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') AND %s <TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+                               (str_fieds, tablename, timefield, btime, timefield, etime)
+    else:
+        if len(btime) == 0:
+            get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        else:
+            if len(etime) == 0:
+                get_data_sql = "SELECT %s FROM %s WHERE %s>='%s' " % \
+                               (str_fieds, tablename, timefield, btime)
+            else:
+                get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' AND %s < '%s' " % \
+                               (str_fieds, tablename, timefield, btime, timefield, etime)
+    realtimedata = pd.read_sql(get_data_sql, engine)
+
+    return realtimedata
+
+
+def extract_water_data(engine, info, btime='', etime=''):
+    tablename = info["tablename"]
+    fields = info["fields"]
+    timefield = info["time"]
+    database_type = info["database"]
+
+    if len(fields) == 0:
+        str_fieds = "*"
+    else:
+        str_fieds = ""
+        for field in fields:
+            if str_fieds == "":
+                str_fieds = field
+            else:
+                str_fieds = str_fieds + ", " + field
+
+    if database_type == 'ora':
+        if len(btime) == 0:
+            get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        else:
+            if len(etime) == 0:
+                get_data_sql = "SELECT %s FROM %s WHERE %s>=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+                               (str_fieds, tablename, timefield, btime)
+            else:
+                get_data_sql = "SELECT %s FROM %s WHERE %s >=TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') AND %s <TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+                               (str_fieds, tablename, timefield, btime, timefield, etime)
+    else:
+        if len(btime) == 0:
+            get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        else:
+            if len(etime) == 0:
+                get_data_sql = "SELECT %s FROM %s WHERE %s>='%s' " % \
+                               (str_fieds, tablename, timefield, btime)
+            else:
+                get_data_sql = "SELECT %s FROM %s WHERE %s >= '%s' AND %s < '%s' " % \
+                               (str_fieds, tablename, timefield, btime, timefield, etime)
+    realtimedata = pd.read_sql(get_data_sql, engine)
+
+    return realtimedata
+
+
+# 提取注气小时数据
+def extract_gas_hour_data(ordata, uptime):
+    ordata.fillna(np.nan, inplace=True)
+
+    exdata_df = {}
+    zsyl_list = []
+    zsssll_list = []
+    zsssll1_list = []
+    zsljll_list = []
+    zqwd_list = []
+    zqnd_list = []
+    zqyl_list = []
+    zqssll_list = []
+    zqssll1_list = []
+    zqljll_list = []
+    yy_list = []
+    ty_list = []
+    dwmc_list = []
+    sjzrl_list = []
+    zqlx_list = []
+    sbbh_list = []
+
+    # 井号列、时间列
+    welllist = list(set(ordata['jh'].values))
+
+    # print(welllist)
+
+    exdata_df["wellname"] = welllist
+    exdata_df["cotime"] = uptime
+
+    ordata = ordata.drop(columns=['txzt'])
+
+    for wellname in welllist:
+
+        welldata = ordata[ordata["jh"] == wellname]
+        well_max_data = welldata.groupby(["jh"]).max()
+        well_mean_data = welldata.groupby(["jh"]).mean()
+        well_min_data = welldata.groupby(["jh"]).min()
+        zsyl_list.append(max([well_max_data["yhbzsyl"].values[0], well_max_data["ehbzsyl"].values[0]]))
+        zsssll_list.append(well_mean_data["yhbssll"].values[0] + well_mean_data["ehbssll"].values[0])
+        zsssll1 = sum([well_max_data["yhbljll"].values[0] - well_min_data["yhbljll"].values[0],
+                       well_max_data["ehbljll"].values[0] - well_min_data["ehbljll"].values[0]])
+        zsssll1_list.append(zsssll1)
+        zsljll_list.append(sum([well_max_data["yhbljll"].values[0], well_max_data["ehbljll"].values[0]]))
+        zqwd_list.append(well_mean_data["zqwd"].values[0])
+        zqnd_list.append(well_mean_data["dqcd"].values[0])
+        zqyl_list.append(well_mean_data["zqyl"].values[0])
+        zqssll_list.append(well_mean_data["zqssll"].values[0])
+        zqssll1_list.append((well_max_data["zqljll"].values[0] - well_min_data["zqljll"].values[0]) * 10000)
+        zqljll_list.append(well_max_data["zqljll"].values[0])
+        yy_list.append(well_mean_data["ygyl"].values[0])
+        ty_list.append(well_mean_data["tgyl"].values[0])
+        dwmc_list.append(welldata["gsmc"].values[0])
+        sjzrl_list.append(welldata["sjzrl"].values[0])
+        zqlx_list.append(welldata["zqlx"].values[0])
+        sbbh_list.append(welldata["ycsbbh"].values[0])
+
+    exdata_df["zsyl"] = zsyl_list
+    exdata_df["zsssll"] = zsssll_list
+    exdata_df["zsssll1"] = zsssll1_list
+    exdata_df["zsljll"] = zsljll_list
+    exdata_df["zqwd"] = zqwd_list
+    exdata_df["zqnd"] = zqnd_list
+    exdata_df["zqyl"] = zqyl_list
+    exdata_df["zqssll"] = zqssll_list
+    exdata_df["zqssll1"] = zqssll1_list
+    exdata_df["zqljll"] = zqljll_list
+    exdata_df["yy"] = yy_list
+    exdata_df["ty"] = ty_list
+    exdata_df["dwmc"] = dwmc_list
+    exdata_df["sjzrl"] = sjzrl_list
+    exdata_df["zqlx"] = zqlx_list
+    exdata_df["sbbh"] = sbbh_list
+
+    exdata = pd.DataFrame(exdata_df)
+
+    return exdata
+    # return 1
+
+
+# 同步注气小时数据
+def synchronize_gas_hour_data(data, checkdata, server, info):
+    # print(data)
+    data.fillna("NULL", inplace=True)
+    # print(data)
+    checkdata["cotime"] = checkdata["cotime"].astype('str')
+
+    def check_data_is_exist(well_name, check_time):
+        welllist = list(set(checkdata['wellname'].values))
+        if len(welllist) > 0:
+            if well_name in welllist:
+                well_check_list = checkdata[checkdata["wellname"] == well_name]
+                well_check_list = list(set(well_check_list['cotime'].values))
+                if check_time in well_check_list:
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+
+    # 同步更新数据
+    tablename = info["tablename"]
+    columns = info["fields"]
+    if len(data) > 0:
+        for i in range(len(data)):
+            values = []
+            meta_data = data.iloc[i, :]
+            for j in range(len(meta_data)):
+                values.append(meta_data[columns[j]])
+
+            wellname = meta_data['wellname']
+            checktime = meta_data['cotime']
+            if check_data_is_exist(wellname, checktime):
+                updatedata(server, tablename, columns, values, funtype='update')
+            else:
+                updatedata(server, tablename, columns, values, funtype='insert')
+
+
+# 数据库函数
+# 往数据库插入数据函数
+def updatedata(server, tablename, fields, values, funtype="insert"):
+    if funtype == "insert":
+        str_fieds = ""
+        for field in fields:
+            if str_fieds == "":
+                str_fieds = field
+            else:
+                str_fieds = str_fieds + ", " + field
+
+        str_values = ""
+        for value in values:
+            if str_values == "":
+                if str(value) == "NULL" or str(value).find('To_Date') >= 0:
+                    str_values = str(value)
+                else:
+                    str_values = "'" + str(value) + "'"
+            else:
+                if str(value) == "NULL" or str(value).find('To_Date') >= 0:
+                    str_values = str_values + ", " + str(value)
+                else:
+                    str_values = str_values + ", '" + str(value) + "'"
+
+        update_data_sql = "INSERT INTO " + tablename + " (" + str_fieds + ") values(" + str_values + ")"
+    else:
+        str_fieds = ""
+        for i in range(len(fields)):
+            if str_fieds == "":
+                if str(values[i]) == "NULL" or str(values[i]).find('To_Date') >= 0:
+                    str_fieds = fields[i] + " = " + str(values[i])
+                else:
+                    str_fieds = fields[i] + " = '" + str(values[i]) + "'"
+            else:
+                if str(values[i]) == "NULL" or str(values[i]).find('To_Date') >= 0:
+                    str_fieds = str_fieds + ", " + fields[i] + " = " + str(values[i])
+                else:
+                    str_fieds = str_fieds + ", " + fields[i] + " = '" + str(values[i]) + "'"
+        update_data_sql = "UPDATE %s SET %s WHERE %s = '%s' and %s = '%s'" % (tablename, str_fieds, "wellname", values[0], "cotime", values[1])
+
+    # print(update_data_sql)
+    executesql(server, update_data_sql)
+
+
+# 检查注水注气数据质量
+def inspect_gas_water_injection_farpass_status():
+    global GLOBAL_Logger
+
+    GLOBAL_Logger.info("开始检查注水注气远传数据质量！")
+    print("......................................................")
+    print("开始检查数据！", getnowtime())
+
+    extractdays = 1
+    try:
+        extimes = 0
+        for exday in range(0, extractdays):
+            # if True:
+            #     exday = 4216
+            inspectgaswaterinjectionfarpassstatus(exday)
+            # print("完成注水注气远传数据质量检查！")
+        GLOBAL_Logger.info("注水注气远传数据质量检查完毕!")
+        print("注水注气远传数据质量检查完成!")
+        # if extractdays - extimes > 0:
+        #     print("共%s天注水注气远传数据质量检查失败!" % str(extractdays - extimes))
+        #     GLOBAL_Logger.info("共%s天注水注气远传数据质量检查失败!" % str(extractdays - extimes))
+    except Exception as e:
+        GLOBAL_Logger.info(traceback.format_exc())
+        print(traceback.format_exc())
+
+
+def inspectgaswaterinjectionfarpassstatus(days):
+    global GLOBAL_Logger
+    # global GlOBAL_oracle_engine_
+    # global GlOBAL_mssql_engine_GBK
+    global GLOBAL_WellNameReference
+
+    onpasswellname = []
+    offpasswellname = []
+    expiredwellname = []
+
+    exdate = getstartdate(days + 3)
+    print("开始更新%s日日报原始参数" % exdate)
+
+    # 日报动态数据，确定注气井号
+    tablename = "cyec.dbo.ecsjb"
+    fields = ["JH", "RQ", "ZSSJ", "RZSL", "ZQSJ", "RZQL", "RBSL"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE RQ>'%s'" % \
+                   (str_fieds, tablename, exdate)
+    dynimicdata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
+    gasdynimicdata = dynimicdata[dynimicdata["ZQSJ"] >= 0]
+    gaswellname = list(gasdynimicdata["JH"].values)
+    gaswellname = list(set(gaswellname))
+    # waterdynimicdata = dynimicdata[dynimicdata["ZSSJ"] >= 0]
+    # waterdynimicwellname = list(waterdynimicdata["JH"].values)
+    # waterdynimicwellname = list(set(waterdynimicwellname))
+    # print(gaswellname)
+
+    # 远传数据，确定注气远传井号
+    exdate = getstartdate(days + 1)
+    tablename = "PCSYWXT20.SSC_ZQSB_SS"
+    fields = ["JH", "CJSJ", "ZQSSLL", "ZQLJLL", "YGYL", "TGYL"]
+    str_fieds = ""
+    for field in fields:
+        if str_fieds == "":
+            str_fieds = field
+        else:
+            str_fieds = str_fieds + ", " + field
+    get_data_sql = "SELECT %s FROM %s WHERE CJSJ>TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+                   (str_fieds, tablename, exdate)
+    realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine_ecpro_pradayly)
+    gasrealtimedata = realtimedata[realtimedata["zqssll"] >= 0]
+    gasrealtimewellname = list(gasrealtimedata["jh"].values)
+    gasrealtimewellname = list(set(gasrealtimewellname))
+    # print(gasrealtimewellname)
+
+    # tablename = "PCSYWXT20.SSC_ZSSB_SS"
+    # fields = ["JH", "CJSJ", "SSLL", "LJLL", "YY", "TY"]
+    # str_fieds = ""
+    # for field in fields:
+    #     if str_fieds == "":
+    #         str_fieds = field
+    #     else:
+    #         str_fieds = str_fieds + ", " + field
+    # get_data_sql = "SELECT %s FROM %s WHERE CJSJ>TO_DATE('%s', 'yyyy-mm-dd,hh24:mi:ss') " % \
+    #                (str_fieds, tablename, exdate)
+    # realtimedata = pd.read_sql(get_data_sql, GlOBAL_oracle_engine)
+    # waterrealtimedata = realtimedata[realtimedata["ssll"] >= 0]
+    # waterrealtimewellname = list(waterrealtimedata["jh"].values)
+    # waterrealtimewellname = list(set(waterrealtimewellname))
+    # # print(gasrealtimewellname)
+
+    # 对比井号，确定远传情况
+    for well in gaswellname:
+        if well in gasrealtimewellname:
+            onpasswellname.append(well)
+        else:
+            offpasswellname.append(well)
+    for well in gasrealtimewellname:
+        if well not in gaswellname:
+            expiredwellname.append(well)
+
+    # print(onpasswellname)
+    # print(offpasswellname)
+    # print(expiredwellname)
+
+    gdate = time.strftime("%Y年%m月%d日%H点%M分", datetime.fromtimestamp(time.time()).timetuple())
+    gonnum = len(onpasswellname)
+    goffnum = len(offpasswellname)
+    gofftext = ""
+    if goffnum > 0:
+        for tx in offpasswellname:
+            if gofftext == "":
+                gofftext = tx
+            else:
+                gofftext = gofftext + ", " + tx
+
+    gexpirednum = len(expiredwellname)
+    gexpiredtext = ""
+    if gexpirednum > 0:
+        for tx in expiredwellname:
+            if gexpiredtext == "":
+                gexpiredtext = tx
+            else:
+                gexpiredtext = gexpiredtext + ", " + tx
+
+    adjusttext = "注气井远传情况公告：\n截至%s，共有注气井%s口，其中远传正常井%s口，远传掉线井%s口" % (gdate, (gonnum + goffnum), gonnum, goffnum)
+    if goffnum == 0:
+        adjusttext = adjusttext + "。"
+    else:
+        adjusttext = adjusttext + ",请尽快运维上线。\n掉线井井号为：%s" % gofftext
+    if gexpirednum == 0:
+        adjusttext = adjusttext + "!"
+    else:
+        adjusttext = adjusttext + "!\n已停注，未摘除设备井号为：%s!\n" % gexpiredtext
+
+    print(adjusttext)
+
+    post_data = {
+        "msgtype": "text",
+        "text": {"content": adjusttext},
+        # "at": {"isAtAll": True}
+    }
+    postdata(GLOBLE_gaswaterrob_url, post_data)
+
+
+# 推送消息
+def postdata(url, post_data):
+    global GLOBLE_headers
+
+    isnotconnect = True
+    num = 0
+
+    while isnotconnect:
+        num = num + 1
+        if num > 10:
+            break
+        try:
+            response = requests.post(url, headers=GLOBLE_headers, data=json.dumps(post_data))
+            response_str = response.text
+            response_dict = json.loads(response_str)
+            if ("errcode" in response_dict) and response_dict["errcode"] == 0:
+                isnotconnect = False
+            else:
+                isnotconnect = True
+        except Exception as e:
+            # print(response)
+            # print(response_str)
+            # print(response_dict)
+            print(traceback.format_exc())
+            GLOBAL_Logger.info(traceback.format_exc())
+            time.sleep(5)
+            continue
+
+
+# 提取注水注气小时数据
+def extract_water_injection_realtime_data():
+    global GLOBAL_Logger
+
+    GLOBAL_Logger.info("开始更新注水注气小时远传数据！")
+    print("......................................................")
+    print("开始更新数据！", getnowtime())
+
+    extracthours = 6
+    try:
+        extimes = 0
+        for exhour in range(0, extracthours):
+        # for exhour in range(290, extracthours):
+            extractwaterinjectionrealtimedata(exhour)
+            print("前%s小时数据提取成功！" % str(exhour))
+            extimes = extimes + 1
+        GLOBAL_Logger.info("共%s小时实时数据提取完毕!" % str(extimes))
+        print("共%s小时实时数据提取完成!" % str(extimes))
+    except Exception as e:
+        GLOBAL_Logger.info(traceback.format_exc())
+        print(traceback.format_exc())
+
+
+def extractwaterinjectionrealtimedata(hour):
+    global GLOBAL_Logger
+    # global GlOBAL_oracle_engine_ecpro_pradayly
+    # global GlOBAL_mssql_engine_GBK
+    # global GlOBAL_mssql_engine_GBK
+
+    print('................................')
+    print(getbegintime(hour * 60, 'minutes'))
+
+    water_hour_data_info = {
+        'tablename': "dbo.EcWaterInjectHourly_Manual",
+        'fields': ['jh', 'sj', 'YY', 'TY', 'ZRL', 'LZL'],
+        'time': "sj",
+        'database': 'mssql'
+    }
+
+    water_static_data_info = {
+        'tablename': "dbo.EcWaterStaticData_Manual",
+        'fields': ['DWMC', 'ZRFS', 'ZSLX', 'GSFS', 'SY', 'ZSSB', 'SBLX', 'ZGYY', 'ZGTY', 'SJQD',
+                   'SJSL', 'ZSFL', 'BZDJ', 'JLFS', 'BZ', 'ZSZT', 'WZSJ', 'JH'],
+        'time': "ZSZT",
+        'database': 'mssql'
+    }
+
+    check_data_info = {
+        'tablename': "dbo.EcWaterInjectDaily_Manual",
+        'fields': ['wellname', 'cotime'],
+        'time': "cotime",
+        'database': 'mssql'
+    }
+
+    sync_data_info = {
+        'tablename': "dbo.EcWaterInjectDaily_Manual",
+        'fields': ['wellname', 'cotime','DWMC', 'ZRFS', 'ZSLX', 'GSFS', 'SY', 'ZSSB', 'SBLX', 'ZGYY', 'ZGTY', 'SJQD',
+                   'SJSL', 'ZSFL', 'BZDJ', 'JLFS', 'BZ', 'ZSZT', 'WZSJ', 'yy', 'ty', 'dayinj', 'suminj'],
+        'time': "cotime",
+        'database': 'mssql'
+    }
+
+    def extract_water_static_data(engine, info):
+        tablename = info["tablename"]
+        fields = info["fields"]
+
+        if len(fields) == 0:
+            str_fieds = "*"
+        else:
+            str_fieds = ""
+            for field in fields:
+                if str_fieds == "":
+                    str_fieds = field
+                else:
+                    str_fieds = str_fieds + ", " + field
+
+        get_data_sql = "SELECT %s FROM %s " % (str_fieds, tablename)
+        staticdata = pd.read_sql(get_data_sql, engine)
+        return staticdata
+
+    def extract_water_check_data(engine, info, checktime):
+        tablename = info["tablename"]
+        fields = info["fields"]
+        checkfield = info["time"]
+
+        if len(fields) == 0:
+            str_fieds = "*"
+        else:
+            str_fieds = ""
+            for field in fields:
+                if str_fieds == "":
+                    str_fieds = field
+                else:
+                    str_fieds = str_fieds + ", " + field
+
+        get_data_sql = "SELECT %s FROM %s WHERE %s = '%s'" % (str_fieds, tablename, checkfield, checktime)
+
+        staticdata = pd.read_sql(get_data_sql, engine)
+        return staticdata
+
+    def extract_daily_water_data(staticydata, hourdata, time):
+
+        def extract_water_daily_data(ordata, uptime):
+            ordata.fillna(np.nan, inplace=True)
+
+            exdata_df = {}
+            yy_list = []
+            ty_list = []
+            zsl_list = []
+            lzl_list = []
+
+            # 井号列、时间列
+            welllist = list(set(ordata['jh'].values))
+
+            # print(welllist)
+
+            exdata_df["JH"] = welllist
+            # exdata_df["cotime"] = uptime
+
+            # ordata = ordata.drop(columns=['zszt'])
+
+            for wellname in welllist:
+                welldata = ordata[ordata["jh"] == wellname]
+                well_max_data = welldata.groupby(["jh"]).max()
+                well_mean_data = welldata.groupby(["jh"]).mean()
+
+                yy_list.append(well_mean_data["YY"].values[0])
+                ty_list.append(well_mean_data["TY"].values[0])
+                zsl_list.append(well_mean_data["ZRL"].values[0])
+                lzl_list.append(well_max_data["LZL"].values[0])
+
+            exdata_df["yy"] = yy_list
+            exdata_df["ty"] = ty_list
+            exdata_df["dayinj"] = zsl_list
+            exdata_df["suminj"] = lzl_list
+
+            exdata = pd.DataFrame(exdata_df)
+            exdata.set_index(["JH"], inplace=True)
+
+            return exdata
+
+        staticydata = staticydata[staticydata['ZSZT'] == "在注"]
+        staticydata.set_index(['JH'], inplace=True)
+
+        daily_data = extract_water_daily_data(hourdata, time)
+        daily_data = pd.concat([staticydata, daily_data], axis=1, join='outer')
+        daily_data["wellname"] = daily_data.index
+        daily_data["cotime"] = time
+        return daily_data
+
+    def synchronize_water_daily_data(data, checkdata, server, info):
+        # print(data)
+        data.fillna("NULL", inplace=True)
+        # print(data)
+        checkdata["cotime"] = checkdata["cotime"].astype('str')
+
+        def check_data_is_exist(well_name, check_time):
+            welllist = list(set(checkdata['wellname'].values))
+            if len(welllist) > 0:
+                if well_name in welllist:
+                    well_check_list = checkdata[checkdata["wellname"] == well_name]
+                    well_check_list = list(set(well_check_list['cotime'].values))
+                    if check_time in well_check_list:
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
+            else:
+                return False
+
+        # 同步更新数据
+        tablename = info["tablename"]
+        columns = info["fields"]
+        if len(data) > 0:
+            for i in range(len(data)):
+                values = []
+                meta_data = data.iloc[i, :]
+                # print(meta_data)
+
+                for j in range(len(meta_data)):
+                    values.append(meta_data[columns[j]])
+
+                # print(columns)
+                # print(values)
+                wellname = meta_data['wellname']
+                checktime = meta_data['cotime']
+                if check_data_is_exist(wellname, checktime):
+                    updatedata(server, tablename, columns, values, funtype='update')
+                else:
+                    updatedata(server, tablename, columns, values, funtype='insert')
+
+    begin_time = getbegintime((hour + 24) * 60, 'minutes')
+    end_time = getbegintime(hour * 60, 'minutes')
+    hour_water_data = extract_ora_data(GlOBAL_mssql_engine_GBK, water_hour_data_info, btime=begin_time, etime=end_time)
+    # print(hour_water_data)
+
+    staticy_water_data = extract_water_static_data(GlOBAL_mssql_engine_GBK, water_static_data_info)
+    # print(staticy_water_data)
+
+    uptime = datetime.fromtimestamp(time.time()) - relativedelta(minutes=hour * 60)
+    uptime = time.strftime("%Y-%m-%d %H:00:00", uptime.timetuple())
+    daily_water_data = extract_daily_water_data(staticy_water_data, hour_water_data, uptime)
+    # print(daily_water_data)
+
+    check_data = extract_water_check_data(GlOBAL_mssql_engine_GBK, check_data_info, uptime)
+    # print(check_data)
+
+    synchronize_water_daily_data(daily_water_data, check_data, SqlserverDataServre, sync_data_info)
+
+
 if __name__ == '__main__':
     print("开始初始化数据")
     initconfig()
@@ -1476,6 +2195,8 @@ if __name__ == '__main__':
     # extract_erchang_well_hour_monitor_data()
     # extract_erchang_well_daily_monitor_data()
     # extract_erchang_well_daily_monitor_chanxi_data()
+    # inspect_gas_water_injection_farpass_status()
+    # extract_water_injection_realtime_data()
 
     print("开始迭代更新数据")
     scheduler = BackgroundScheduler()
@@ -1492,6 +2213,13 @@ if __name__ == '__main__':
     job5 = scheduler.add_job(extract_erchang_well_daily_monitor_data, 'cron', hour=11, minute=5)
     # 每天归集小时动态数据，生成日度动态数据，包括站库掺稀数据
     job6 = scheduler.add_job(extract_erchang_well_daily_monitor_chanxi_data, 'cron', hour=16, minute=5)
+    # 每天推送注气井远传状态信息
+    job7 = scheduler.add_job(inspect_gas_water_injection_farpass_status, 'cron', hour=18)
+    # 每天小时归集注气24小时小时数据
+    job8 = scheduler.add_job(extract_gas_water_injection_realtime_data, 'cron', minute=50)
+    # 每天小时归集注气24小时小时数据
+    job9 = scheduler.add_job(extract_water_injection_realtime_data, 'cron', minute=50)
+
     scheduler.start()
 
     while True:
