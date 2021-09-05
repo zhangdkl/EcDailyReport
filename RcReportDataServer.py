@@ -939,7 +939,7 @@ def extract_erchang_well_daily_monitor_data():
     print("......................................................")
     print(getnowtime(), "开始转储二厂单井日度监测数据!")
 
-    extracdays = 5
+    extracdays = 6
     try:
         for exday in range(0, extracdays):
             # 单井功图数据
@@ -978,7 +978,7 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
     # 自动功图数据
     StrFieds = ""
     tablename = "EcWellIndicatorAutoHour"
-    GetField = ["wellname", "date", "stroke", "speed", "minload", "maxload"]
+    GetField = ["wellname", "date", "stroke", "speed", "minload", "maxload", "displacement", "load"]
     # ShishiFieldName = ["wellname", "date", "stroke", "speed", "minload", "maxload"]
     for field in GetField:
         if StrFieds == "":
@@ -989,9 +989,14 @@ def ExtractEcWellAutoIndicatorDataDay(exday):
     shicedata = pd.read_sql(get_data_sql, GlOBAL_mssql_engine_GBK)
     # shicedata.columns = ShishiFieldName
     if len(shicedata) > 0:
-        shicedata = shicedata.groupby("wellname").mean()
-        shicedata = shicedata.round(1)
-        shicedata["date"] = uptime
+        meanshicedata = shicedata.groupby("wellname").mean()
+        meanshicedata = meanshicedata.round(1)
+        meanshicedata["date"] = uptime
+
+        lastshicedata = shicedata.groupby("wellname").last()
+        lastshicedata = lastshicedata.loc[:, ["displacement", "load"]]
+
+        shicedata = pd.concat([meanshicedata, lastshicedata], axis=1, join="outer")
 
         # 删除已有数据
         tablename = "EcWellIndicatorAutoDaily"
@@ -1492,7 +1497,7 @@ def extract_gas_water_injection_realtime_data():
     try:
         extimes = 0
         for exhour in range(0, extracthours):
-        # for exhour in range(290, extracthours):
+            # for exhour in range(290, extracthours):
             extractgaswaterinjectionrealtimedata(exhour)
             print("前%s小时数据提取成功！" % str(exhour))
             extimes = extimes + 1
@@ -1667,7 +1672,6 @@ def extract_gas_hour_data(ordata, uptime):
     ordata = ordata.drop(columns=['txzt'])
 
     for wellname in welllist:
-
         welldata = ordata[ordata["jh"] == wellname]
         well_max_data = welldata.groupby(["jh"]).max()
         well_mean_data = welldata.groupby(["jh"]).mean()
@@ -1986,7 +1990,7 @@ def extract_water_injection_realtime_data():
     try:
         extimes = 0
         for exhour in range(0, extracthours):
-        # for exhour in range(290, extracthours):
+            # for exhour in range(290, extracthours):
             extractwaterinjectionrealtimedata(exhour)
             print("前%s小时数据提取成功！" % str(exhour))
             extimes = extimes + 1
@@ -2030,7 +2034,7 @@ def extractwaterinjectionrealtimedata(hour):
 
     sync_data_info = {
         'tablename': "dbo.EcWaterInjectDaily_Manual",
-        'fields': ['wellname', 'cotime','DWMC', 'ZRFS', 'ZSLX', 'GSFS', 'SY', 'ZSSB', 'SBLX', 'ZGYY', 'ZGTY', 'SJQD',
+        'fields': ['wellname', 'cotime', 'DWMC', 'ZRFS', 'ZSLX', 'GSFS', 'SY', 'ZSSB', 'SBLX', 'ZGYY', 'ZGTY', 'SJQD',
                    'SJSL', 'ZSFL', 'BZDJ', 'JLFS', 'BZ', 'ZSZT', 'WZSJ', 'yy', 'ty', 'dayinj', 'suminj'],
         'time': "cotime",
         'database': 'mssql'

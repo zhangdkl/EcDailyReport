@@ -10374,3 +10374,39 @@ pymssql._pymssql.OperationalError: (245, b"Conversion failed when converting the
 2021-09-03 01:33:38,861 - logger - INFO - 共6小时实时数据提取完毕!
 2021-09-04 17:16:43,529 - logger - INFO - 开始更新注水注气小时远传数据！
 2021-09-04 17:17:14,936 - logger - INFO - 共6小时实时数据提取完毕!
+2021-09-06 02:33:53,934 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 946, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellAutoIndicatorDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 996, in ExtractEcWellAutoIndicatorDataDay
+    lastshicedata = shicedata.iloc[:, ["wellname", "displacement", "load"]]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 889, in __getitem__
+    return self._getitem_tuple(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1450, in _getitem_tuple
+    self._has_valid_tuple(tup)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 723, in _has_valid_tuple
+    self._validate_key(k, i)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1369, in _validate_key
+    raise IndexError(f".iloc requires numeric indexers, got {arr}")
+IndexError: .iloc requires numeric indexers, got ['wellname' 'displacement' 'load']
+
+2021-09-06 02:43:43,609 - logger - INFO - Traceback (most recent call last):
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 946, in extract_erchang_well_daily_monitor_data
+    ExtractEcWellAutoIndicatorDataDay(exday)
+  File "C:/PyWorkbench/EcDailyReport/RcReportDataServer.py", line 997, in ExtractEcWellAutoIndicatorDataDay
+    lastshicedata = lastshicedata.loc[:, ["wellname", "displacement", "load"]]
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 889, in __getitem__
+    return self._getitem_tuple(key)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1069, in _getitem_tuple
+    return self._getitem_tuple_same_dim(tup)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 775, in _getitem_tuple_same_dim
+    retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1113, in _getitem_axis
+    return self._getitem_iterable(key, axis=axis)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1053, in _getitem_iterable
+    keyarr, indexer = self._get_listlike_indexer(key, axis, raise_missing=False)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1266, in _get_listlike_indexer
+    self._validate_read_indexer(keyarr, indexer, axis, raise_missing=raise_missing)
+  File "C:\PyWorkbench\EcDailyReport\venv\lib\site-packages\pandas\core\indexing.py", line 1322, in _validate_read_indexer
+    "Passing list-likes to .loc or [] with any missing labels "
+KeyError: "Passing list-likes to .loc or [] with any missing labels is no longer supported. The following labels were missing: Index(['wellname'], dtype='object'). See https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#deprecate-loc-reindex-listlike"
+
